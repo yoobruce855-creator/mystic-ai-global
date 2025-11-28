@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Professional mystical services powered by AI - Tarot Reading, Daily Horoscope, Dream Interpretation, Compatibility Check, and Baby Name Generator">
+    <meta name="keywords"
+        content="tarot, horoscope, astrology, dream interpretation, compatibility, baby names, numerology">
+    <title>Mystic AI - Professional Mystical Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="loading.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+
+        .back-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border-glow);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="credits-bar">
+        <div class="credits-info">
+            <span class="credit-icon">💎</span>
+            <span id="userCredits">3</span> Credits
+        </div>
+        <button class="upgrade-btn" onclick="openPaymentModal()">⭐ Premium</button>
+    </div>
+
+    <div id="mainScreen" class="screen active">
+        <div class="stars"></div>
+        <div class="container">
+            <header class="header">
+                <div class="logo">
+                    <span class="logo-icon">🔮</span>
+                    <h1>Mystic AI</h1>
+                </div>
+                <p class="tagline">Professional Mystical Services Powered by AI</p>
+            </header>
+
+            <div class="services-grid">
+                <div class="service-card" onclick="showScreen('tarotScreen')">
+                    <div class="card-icon">🎴</div>
+                    <h2>Tarot Reading</h2>
+                    <p>Deep insights with 22 Major Arcana cards</p>
+                </div>
+                <div class="service-card" onclick="showScreen('horoscopeScreen')">
+                    <div class="card-icon">📅</div>
+                    <h2>Daily Horoscope</h2>
+                    <p>Personalized daily fortune</p>
+                </div>
+                <div class="service-card" onclick="showScreen('dreamScreen')">
+                    <div class="card-icon">🌙</div>
+                    <h2>Dream Interpretation</h2>
+                    <p>100+ symbols with detailed analysis</p>
+                </div>
+                <div class="service-card" onclick="showScreen('compatibilityScreen')">
+                    <div class="card-icon">💕</div>
+                    <h2>Compatibility</h2>
+                    <p>Detailed relationship analysis</p>
+                </div>
+                <div class="service-card" onclick="showScreen('namingScreen')">
+                    <div class="card-icon">👶</div>
+                    <h2>Baby Names</h2>
+                    <p>Numerology & astrology based</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAROT SCREEN -->
+    <div id="tarotScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">🎴</div>
+                <h1>Tarot Reading</h1>
+                <p>Draw 3 cards for Past, Present, and Future</p>
+            </div>
+            <div class="tarot-cards">
+                <div class="cards-container">
+                    <div class="tarot-card" onclick="drawTarotCards()" style="cursor: pointer;">
+                        <div class="card-back">🎴</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">Click to draw 3 cards (1
+                    Credit)</p>
+                <div id="tarotResult" class="hidden" style="margin-top: 3rem;">
+                    <div class="cards-container" style="gap: 2rem;">
+                        <div
+                            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 2px solid var(--border-glow); text-align: center; min-width: 250px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 1rem;">Past</h4>
+                            <div id="card1Emoji" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+                            <h3 id="card1Name" style="color: var(--accent-gold); margin-bottom: 0.5rem;"></h3>
+                            <p id="card1Meaning"
+                                style="color: var(--primary-purple-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            </p>
+                            <p id="card1Description" style="color: var(--text-secondary); line-height: 1.6;"></p>
+                        </div>
+                        <div
+                            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 2px solid var(--border-glow); text-align: center; min-width: 250px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 1rem;">Present</h4>
+                            <div id="card2Emoji" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+                            <h3 id="card2Name" style="color: var(--accent-gold); margin-bottom: 0.5rem;"></h3>
+                            <p id="card2Meaning"
+                                style="color: var(--primary-purple-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            </p>
+                            <p id="card2Description" style="color: var(--text-secondary); line-height: 1.6;"></p>
+                        </div>
+                        <div
+                            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 2px solid var(--border-glow); text-align: center; min-width: 250px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 1rem;">Future</h4>
+                            <div id="card3Emoji" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+                            <h3 id="card3Name" style="color: var(--accent-gold); margin-bottom: 0.5rem;"></h3>
+                            <p id="card3Meaning"
+                                style="color: var(--primary-purple-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            </p>
+                            <p id="card3Description" style="color: var(--text-secondary); line-height: 1.6;"></p>
+                        </div>
+                    </div>
+                    <button class="primary-button" onclick="drawTarotCards()"
+                        style="max-width: 400px; margin: 2rem auto; display: block;">Draw Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Continue with remaining screens... This is getting too long. Let me create a complete file -->
+
+    <script src="western_names.js"></script>
+    <script src="dream_data.js"></script>
+    <script src="professional_en.js"></script>
+    <script src="payment_functions.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI v2 (Fixed)</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #16213e;
+            border: 1px solid #0f3460;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: #1a1a40;
+        }
+
+        .card h2 {
+            margin: 0 0 10px 0;
+            color: #ffd700;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        input,
+        select {
+            background: #0f3460;
+            color: white;
+        }
+
+        button {
+            background: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        button:hover {
+            background: #ff2e63;
+        }
+
+        .back-btn {
+            background: transparent;
+            color: #aaa;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        .back-btn:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .result-box {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .name-item {
+            border-bottom: 1px solid #333;
+            padding: 10px 0;
+        }
+
+        .score {
+            float: right;
+            color: #4caf50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MAIN MENU -->
+    <div id="mainScreen" class="screen active">
+        <h1>🔮 Mystic AI v2</h1>
+        <p>Select a service below</p>
+
+        <div class="container">
+            <div class="card" onclick="openScreen('namingScreen')">
+                <h2>✍️ AI Naming Center</h2>
+                <p>Get a name for Success & Power</p>
+            </div>
+
+            <div class="card" onclick="openScreen('todayScreen')">
+                <h2>📅 Daily Fortune</h2>
+                <p>Check your luck for today</p>
+            </div>
+
+            <div class="card" onclick="openScreen('sajuScreen')">
+                <h2>🎴 Saju Analysis</h2>
+                <p>Traditional Destiny Reading</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAMING SCREEN -->
+    <div id="namingScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="openScreen('mainScreen')">← Back to Main</button>
+            <h1>AI Naming Center</h1>
+
+            <div style="text-align: left;">
+                <label>Surname</label>
+                <input type="text" id="surname" placeholder="Ex: Kim">
+
+                <label>Birth Date</label>
+                <input type="date" id="birthdate">
+
+                <label>Gender</label>
+                <select id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <button onclick="generateNames()">Generate Names</button>
+
+            <div id="namingResult" class="result-box" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- TODAY SCREEN -->
+    <div id="todayScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="openScreen('mainScreen')">← Back to Main</button>
+            <h1>Daily Fortune</h1>
+            <button onclick="getFortune()">Reveal My Fortune</button>
+            <div id="fortuneResult" class="result-box" style="display: none; text-align: center;"></div>
+        </div>
+    </div>
+
+    <!-- SAJU SCREEN -->
+    <div id="sajuScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="openScreen('mainScreen')">← Back to Main</button>
+            <h1>Saju Analysis</h1>
+            <input type="text" id="sajuName" placeholder="Your Name">
+            <input type="date" id="sajuDate">
+            <button onclick="analyzeSaju()">Analyze</button>
+            <div id="sajuResult" class="result-box" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- NAVIGATION ---
+        function openScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        // --- NAMING LOGIC ---
+        const namesDB = {
+            male: [
+                { h: '건우(建宇)', m: '세상을 세우는 큰 집', s: 98 },
+                { h: '태양(太陽)', m: '세상을 비추는 빛', s: 100 },
+                { h: '민재(敏宰)', m: '세상을 다스리는 재상', s: 99 },
+                { h: '도현(道賢)', m: '지혜의 정점', s: 98 }
+            ],
+            female: [
+                { h: '가연(佳娟)', m: '아름다운 인재', s: 98 },
+                { h: '지아(智雅)', m: '지혜롭고 우아함', s: 99 },
+                { h: '서현(瑞賢)', m: '어진 덕망', s: 99 },
+                { h: '채원(采源)', m: '풍요의 근원', s: 98 }
+            ]
+        };
+
+        function generateNames() {
+            const surname = document.getElementById('surname').value;
+            const date = document.getElementById('birthdate').value;
+            const gender = document.getElementById('gender').value;
+
+            if (!surname || !date) { alert("Please enter surname and date!"); return; }
+
+            const list = namesDB[gender];
+            let html = `<h3 style="color:#ffd700; text-align:center;">Recommended Names</h3>`;
+
+            list.forEach(item => {
+                html += `
+                <div class="name-item">
+                    <span style="font-size: 1.2em; color: #fff;">${surname}${item.h.split('(')[0]}</span>
+                    <span style="color: #aaa; font-size: 0.9em;">${item.h}</span>
+                    <div style="margin-top:5px; color: #ccc;">${item.m}</div>
+                    <div class="score">Score: ${item.s}</div>
+                </div>`;
+            });
+
+            const resDiv = document.getElementById('namingResult');
+            resDiv.innerHTML = html;
+            resDiv.style.display = 'block';
+        }
+
+        // --- FORTUNE LOGIC ---
+        function getFortune() {
+            const msgs = [
+                { t: 'Great Luck', m: 'Everything will go your way today!' },
+                { t: 'Good Luck', m: 'A small surprise is waiting for you.' },
+                { t: 'Peaceful', m: 'Enjoy a calm and relaxing day.' }
+            ];
+            const f = msgs[Math.floor(Math.random() * msgs.length)];
+
+            const resDiv = document.getElementById('fortuneResult');
+            resDiv.innerHTML = `
+                <h2 style="color:#ffd700;">${f.t}</h2>
+                <p style="font-size:1.2em;">${f.m}</p>
+                <div style="margin-top:20px; padding:10px; background:#16213e; border-radius:10px;">
+                    Lucky Numbers: <span style="color:#e94560; font-weight:bold;">${Math.floor(Math.random() * 45) + 1}, ${Math.floor(Math.random() * 45) + 1}, ${Math.floor(Math.random() * 45) + 1}</span>
+                </div>
+            `;
+            resDiv.style.display = 'block';
+        }
+
+        // --- SAJU LOGIC ---
+        function analyzeSaju() {
+            const name = document.getElementById('sajuName').value;
+            if (!name) { alert("Enter name"); return; }
+            const resDiv = document.getElementById('sajuResult');
+            resDiv.innerHTML = `<h3 style="color:#ffd700;">Analysis for ${name}</h3><p>Your energy is strong like a mountain. Success is in your future.</p>`;
+            resDiv.style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI - 관리자 대시보드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Table */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .search-box {
+            padding: 8px 16px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            width: 250px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-dark);
+        }
+
+        th {
+            padding: 16px 24px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-hover);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge.premium {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000;
+        }
+
+        .badge.free {
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+        }
+
+        .badge.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge.pending {
+            background: var(--warning);
+            color: white;
+        }
+
+        .badge.failed {
+            background: var(--danger);
+            color: white;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn.danger {
+            background: var(--danger);
+        }
+
+        .action-btn.danger:hover {
+            background: #dc2626;
+        }
+
+        /* Chart */
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        #revenueChart {
+            width: 100%;
+            height: 300px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <span>🔮</span>
+                Mystic AI 관리자 대시보드
+            </h1>
+            <div class="user-info">
+                <span id="adminName">관리자</span>
+                <button class="logout-btn" onclick="logout()">로그아웃</button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">총 사용자</span>
+                    <span class="stat-icon">👥</span>
+                </div>
+                <div class="stat-value" id="totalUsers">-</div>
+                <div class="stat-change positive">
+                    <span>↑</span>
+                    <span id="userGrowth">-</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">프리미엄 회원</span>
+                    <span class="stat-icon">⭐</span>
+                </div>
+                <div class="stat-value" id="premiumUsers">-</div>
+                <div class="stat-change positive">
+                    <span>↑</span>
+                    <span id="premiumGrowth">-</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">총 매출</span>
+                    <span class="stat-icon">💰</span>
+                </div>
+                <div class="stat-value" id="totalRevenue">-</div>
+                <div class="stat-change positive">
+                    <span>↑</span>
+                    <span id="revenueGrowth">-</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">오늘 결제</span>
+                    <span class="stat-icon">📊</span>
+                </div>
+                <div class="stat-value" id="todayPayments">-</div>
+                <div class="stat-change positive">
+                    <span id="todayAmount">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="chart-container">
+            <div class="chart-title">📈 최근 30일 매출 추이</div>
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('users')">사용자 관리</button>
+            <button class="tab" onclick="switchTab('payments')">결제 내역</button>
+            <button class="tab" onclick="switchTab('usage')">서비스 이용 통계</button>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="usersTab" class="tab-content active">
+            <div class="table-container">
+                <div class="table-header">
+                    <h2 class="table-title">사용자 목록</h2>
+                    <input type="text" class="search-box" placeholder="이메일 또는 이름 검색..." id="userSearch">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>이메일</th>
+                            <th>이름</th>
+                            <th>크레딧</th>
+                            <th>상태</th>
+                            <th>가입일</th>
+                            <th>액션</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="7" class="loading">
+                                <div class="spinner"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Payments Tab -->
+        <div id="paymentsTab" class="tab-content">
+            <div class="table-container">
+                <div class="table-header">
+                    <h2 class="table-title">결제 내역</h2>
+                    <input type="text" class="search-box" placeholder="주문번호 검색..." id="paymentSearch">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>주문번호</th>
+                            <th>사용자 ID</th>
+                            <th>플랜</th>
+                            <th>금액</th>
+                            <th>상태</th>
+                            <th>결제일</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                        <tr>
+                            <td colspan="6" class="loading">
+                                <div class="spinner"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Usage Tab -->
+        <div id="usageTab" class="tab-content">
+            <div class="table-container">
+                <div class="table-header">
+                    <h2 class="table-title">서비스 이용 통계</h2>
+                </div>
+                <div style="padding: 40px; text-align: center;">
+                    <p style="color: var(--text-secondary);">서비스 이용 통계는 추후 업데이트 예정입니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Credits Modal -->
+    <div id="editCreditsModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">크레딧 수정</h2>
+            <div class="form-group">
+                <label>사용자 이메일</label>
+                <input type="text" id="editUserEmail" readonly>
+            </div>
+            <div class="form-group">
+                <label>크레딧</label>
+                <input type="number" id="editCredits" min="0">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+                <button class="btn btn-primary" onclick="saveCredits()">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentTab = 'users';
+        let allUsers = [];
+        let allPayments = [];
+        let currentEditUserId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            loadUsers();
+            loadPayments();
+            loadRevenueChart();
+        });
+
+        // Tab switching
+        function switchTab(tab) {
+            currentTab = tab;
+
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                // Mock data for demo
+                document.getElementById('totalUsers').textContent = '1,234';
+                document.getElementById('userGrowth').textContent = '+12% 이번 달';
+                document.getElementById('premiumUsers').textContent = '156';
+                document.getElementById('premiumGrowth').textContent = '+8% 이번 달';
+                document.getElementById('totalRevenue').textContent = '₩2,340,000';
+                document.getElementById('revenueGrowth').textContent = '+15% 이번 달';
+                document.getElementById('todayPayments').textContent = '23건';
+                document.getElementById('todayAmount').textContent = '₩227,700';
+            } catch (error) {
+                console.error('Stats loading error:', error);
+            }
+        }
+
+        // Load users
+        async function loadUsers() {
+            try {
+                // Mock data for demo
+                const mockUsers = [
+                    { id: 1, email: 'user1@example.com', name: '김철수', credits: 5, isPremium: true, createdAt: '2024-01-15' },
+                    { id: 2, email: 'user2@example.com', name: '이영희', credits: 3, isPremium: false, createdAt: '2024-02-20' },
+                    { id: 3, email: 'user3@example.com', name: '박민수', credits: 10, isPremium: true, createdAt: '2024-03-10' },
+                ];
+
+                allUsers = mockUsers;
+                renderUsers(mockUsers);
+            } catch (error) {
+                console.error('Users loading error:', error);
+            }
+        }
+
+        // Render users table
+        function renderUsers(users) {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.email}</td>
+                    <td>${user.name}</td>
+                    <td>${user.credits}</td>
+                    <td>
+                        <span class="badge ${user.isPremium ? 'premium' : 'free'}">
+                            ${user.isPremium ? '프리미엄' : '무료'}
+                        </span>
+                    </td>
+                    <td>${user.createdAt}</td>
+                    <td>
+                        <button class="action-btn" onclick="editCredits(${user.id})">크레딧 수정</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Load payments
+        async function loadPayments() {
+            try {
+                // Mock data for demo
+                const mockPayments = [
+                    { orderId: 'order-001', userId: 1, plan: 'monthly', amount: 9900, status: 'completed', createdAt: '2024-03-15' },
+                    { orderId: 'order-002', userId: 2, plan: 'credits', amount: 4900, status: 'completed', createdAt: '2024-03-14' },
+                    { orderId: 'order-003', userId: 3, plan: 'yearly', amount: 99000, status: 'pending', createdAt: '2024-03-13' },
+                ];
+
+                allPayments = mockPayments;
+                renderPayments(mockPayments);
+            } catch (error) {
+                console.error('Payments loading error:', error);
+            }
+        }
+
+        // Render payments table
+        function renderPayments(payments) {
+            const tbody = document.getElementById('paymentsTableBody');
+            tbody.innerHTML = payments.map(payment => `
+                <tr>
+                    <td>${payment.orderId}</td>
+                    <td>${payment.userId}</td>
+                    <td>${getPlanName(payment.plan)}</td>
+                    <td>₩${payment.amount.toLocaleString()}</td>
+                    <td>
+                        <span class="badge ${payment.status}">
+                            ${getStatusName(payment.status)}
+                        </span>
+                    </td>
+                    <td>${payment.createdAt}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Helper functions
+        function getPlanName(plan) {
+            const names = {
+                monthly: '월간 프리미엄',
+                yearly: '연간 프리미엄',
+                credits: '크레딧 충전'
+            };
+            return names[plan] || plan;
+        }
+
+        function getStatusName(status) {
+            const names = {
+                completed: '완료',
+                pending: '대기중',
+                failed: '실패'
+            };
+            return names[status] || status;
+        }
+
+        // Edit credits
+        function editCredits(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) return;
+
+            currentEditUserId = userId;
+            document.getElementById('editUserEmail').value = user.email;
+            document.getElementById('editCredits').value = user.credits;
+            document.getElementById('editCreditsModal').classList.add('active');
+        }
+
+        // Save credits
+        async function saveCredits() {
+            const credits = parseInt(document.getElementById('editCredits').value);
+            
+            // Update local data
+            const user = allUsers.find(u => u.id === currentEditUserId);
+            if (user) {
+                user.credits = credits;
+                renderUsers(allUsers);
+            }
+
+            closeModal();
+            alert('크레딧이 업데이트되었습니다.');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('editCreditsModal').classList.remove('active');
+            currentEditUserId = null;
+        }
+
+        // Load revenue chart
+        function loadRevenueChart() {
+            const canvas = document.getElementById('revenueChart');
+            const ctx = canvas.getContext('2d');
+            
+            // Simple chart drawing (you can integrate Chart.js for better charts)
+            ctx.fillStyle = 'var(--text-secondary)';
+            ctx.font = '14px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText('차트는 Chart.js 라이브러리를 통합하여 구현할 수 있습니다.', canvas.width / 2, canvas.height / 2);
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Search functionality
+        document.getElementById('userSearch')?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allUsers.filter(u =>
+                u.email.toLowerCase().includes(query) ||
+                u.name.toLowerCase().includes(query)
+            );
+            renderUsers(filtered);
+        });
+
+        document.getElementById('paymentSearch')?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allPayments.filter(p =>
+                p.orderId.toLowerCase().includes(query)
+            );
+            renderPayments(filtered);
+        });
+    </script>
+</body>
+
+</html>

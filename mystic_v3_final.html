@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI - Ver 3.0 Final</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f0c29;
+            --secondary-bg: #302b63;
+            --accent-gold: #FFD700;
+            --text-primary: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(to bottom, var(--primary-bg), var(--secondary-bg));
+            color: var(--text-primary);
+            font-family: 'Lato', sans-serif;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #555;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            border: none;
+            background: var(--accent-gold);
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background: #ffed4a;
+        }
+
+        .back-btn {
+            background: none;
+            color: #aaa;
+            width: auto;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: none;
+            color: white;
+        }
+
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #loadingOverlay.active {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loadingOverlay">
+        <div style="color:var(--accent-gold); font-size:2rem;">🔮 Consulting Stars...</div>
+    </div>
+
+    <!-- MAIN -->
+    <div id="mainScreen" class="screen active">
+        <div class="container">
+            <h1 style="text-align: center; color: var(--accent-gold); margin: 40px 0;">Mystic AI <span
+                    style="font-size:0.5em; color:#aaa;">Ver 3.0</span></h1>
+            <div style="text-align: center; margin-bottom: 30px;">Credits: <span id="userCredits">3</span></div>
+
+            <div class="service-card" onclick="app.showScreen('namingScreen')">
+                <div style="font-size: 3rem;">✍️</div>
+                <h3>AI Naming Center</h3>
+                <p>Executive Class Names for Success</p>
+            </div>
+            <div class="service-card" onclick="app.showScreen('todayScreen')">
+                <div style="font-size: 3rem;">📅</div>
+                <h3>Daily Fortune</h3>
+                <p>Check your luck today</p>
+            </div>
+            <div class="service-card" onclick="app.showScreen('sajuScreen')">
+                <div style="font-size: 3rem;">🎴</div>
+                <h3>Saju Analysis</h3>
+                <p>Traditional Destiny Reading</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAMING -->
+    <div id="namingScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">AI Naming Center</h2>
+            <input type="text" id="namingSurname" placeholder="Surname (e.g. Kim)">
+            <input type="date" id="namingDate">
+            <select id="namingGender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <button onclick="app.generateName()">Generate Names (3 Credits)</button>
+            <div id="namingResult" style="margin-top: 30px; display: none;"></div>
+        </div>
+    </div>
+
+    <!-- TODAY -->
+    <div id="todayScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">Daily Fortune</h2>
+            <button onclick="app.getDailyFortune()">Reveal Fortune</button>
+            <div id="todayResult"
+                style="margin-top: 30px; display: none; text-align: center; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                <div id="fortuneEmoji" style="font-size: 4rem;"></div>
+                <h3 id="fortuneTitle" style="color: var(--accent-gold); margin: 10px 0;"></h3>
+                <p id="fortuneMessage"></p>
+                <div style="margin-top: 20px; font-size: 1.5rem; letter-spacing: 3px;" id="luckyNumbers"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAJU -->
+    <div id="sajuScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">Saju Analysis</h2>
+            <input type="text" id="sajuName" placeholder="Name">
+            <input type="date" id="sajuDate">
+            <button onclick="app.analyzeSaju()">Analyze (2 Credits)</button>
+            <div id="sajuResult"
+                style="margin-top: 30px; display: none; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                <h3 id="sajuTitle" style="color: var(--accent-gold);"></h3>
+                <p id="sajuText" style="margin-top: 10px;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = {
+            credits: 3,
+            namingDB: {
+                male: [{ h: '건우(建宇)', m: '세상을 세우는 큰 집', s: 98 }, { h: '태양(太陽)', m: '세상의 빛', s: 100 }],
+                female: [{ h: '지아(智雅)', m: '지혜롭고 우아함', s: 99 }, { h: '서현(瑞賢)', m: '어진 덕망', s: 99 }]
+            },
+
+            showScreen: (id) => {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+            },
+
+            updateCredits: () => { document.getElementById('userCredits').textContent = app.credits; },
+
+            showLoading: (cb) => {
+                document.getElementById('loadingOverlay').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').classList.remove('active');
+                    cb();
+                }, 1000);
+            },
+
+            generateName: () => {
+                const surname = document.getElementById('namingSurname').value;
+                const date = document.getElementById('namingDate').value;
+                const gender = document.getElementById('namingGender').value;
+
+                if (!surname || !date) { alert("Please enter all fields"); return; }
+                if (app.credits < 3) { alert("Not enough credits"); return; }
+
+                app.showLoading(() => {
+                    app.credits -= 3;
+                    app.updateCredits();
+                    const list = app.namingDB[gender === 'male' ? 'male' : 'female']; // Simplified for stability
+
+                    const html = list.map(item => `
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #555;">
+                            <h3 style="color: var(--accent-gold); margin: 0;">${surname}${item.h.split('(')[0]} <span style="font-size:0.8em; color:#aaa;">${item.h}</span></h3>
+                            <p style="margin: 5px 0; color: #ddd;">${item.m}</p>
+                            <div style="text-align: right; color: #4caf50; font-weight: bold;">Score: ${item.s}</div>
+                        </div>
+                    `).join('');
+
+                    const res = document.getElementById('namingResult');
+                    res.innerHTML = html;
+                    res.style.display = 'block';
+                });
+            },
+
+            getDailyFortune: () => {
+                app.showLoading(() => {
+                    const msgs = [{ e: '⭐', t: 'Great Luck', m: 'Everything goes well.' }, { e: '🌈', t: 'Good Luck', m: 'Happiness is near.' }];
+                    const f = msgs[Math.floor(Math.random() * msgs.length)];
+                    document.getElementById('fortuneEmoji').textContent = f.e;
+                    document.getElementById('fortuneTitle').textContent = f.t;
+                    document.getElementById('fortuneMessage').textContent = f.m;
+                    document.getElementById('luckyNumbers').textContent = "7, 12, 23, 34, 41, 45";
+                    document.getElementById('todayResult').style.display = 'block';
+                });
+            },
+
+            analyzeSaju: () => {
+                const name = document.getElementById('sajuName').value;
+                if (!name) { alert("Enter name"); return; }
+                if (app.credits < 2) { alert("Not enough credits"); return; }
+                app.showLoading(() => {
+                    app.credits -= 2;
+                    app.updateCredits();
+                    document.getElementById('sajuTitle').textContent = `Analysis for ${name}`;
+                    document.getElementById('sajuText').textContent = "Your destiny is strong. Success awaits.";
+                    document.getElementById('sajuResult').style.display = 'block';
+                });
+            }
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI - Final Integrated Version</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f0c29;
+            --secondary-bg: #302b63;
+            --accent-gold: #FFD700;
+            --accent-purple: #9D50BB;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 215, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(to bottom, var(--primary-bg), var(--secondary-bg));
+            color: var(--text-primary);
+            font-family: 'Lato', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* HEADER */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .user-stats {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+        }
+
+        /* CARDS */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* SCREENS */
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* INPUTS & BUTTONS */
+        .input-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .primary-button {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--accent-gold), #FFA500);
+            color: black;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+
+        .primary-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn:hover {
+            color: white;
+        }
+
+        /* LOADING */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 12, 41, 0.95);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .crystal-ball {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(157, 80, 187, 0.8));
+            box-shadow: 0 0 50px var(--accent-purple);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+
+        /* RESULTS */
+        .result-box {
+            margin-top: 30px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOADING OVERLAY -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="crystal-ball"></div>
+        <div class="loading-text" id="loadingText">Consulting the Stars...</div>
+    </div>
+
+    <!-- MAIN SCREEN -->
+    <div id="mainScreen" class="screen active">
+        <div class="container">
+            <header class="main-header">
+                <div class="logo">Mystic AI</div>
+                <p class="tagline">Unlock Your Destiny with Artificial Intelligence</p>
+                <div class="user-stats">Credits: <span id="userCredits">3</span></div>
+            </header>
+
+            <div class="services-grid">
+                <div class="service-card" onclick="app.showScreen('namingScreen')">
+                    <div class="card-icon">✍️</div>
+                    <h3>AI Naming Center</h3>
+                    <p>Create the perfect name for success and prosperity.</p>
+                </div>
+                <div class="service-card" onclick="app.showScreen('todayScreen')">
+                    <div class="card-icon">📅</div>
+                    <h3>Daily Fortune</h3>
+                    <p>Start your day with personalized cosmic advice.</p>
+                </div>
+                <div class="service-card" onclick="app.showScreen('sajuScreen')">
+                    <div class="card-icon">🎴</div>
+                    <h3>Saju Analysis</h3>
+                    <p>Traditional Korean destiny analysis.</p>
+                </div>
+                <div class="service-card" onclick="app.showScreen('tarotScreen')">
+                    <div class="card-icon">🃏</div>
+                    <h3>AI Tarot</h3>
+                    <p>Deep psychological insights.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAMING SCREEN -->
+    <div id="namingScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <div class="main-header">
+                <div class="logo" style="font-size: 2rem;">AI Naming Center</div>
+                <p>Executive Class Names for Success</p>
+            </div>
+            <div class="input-section">
+                <div class="input-group"><label>Surname</label><input type="text" id="namingSurname"
+                        placeholder="e.g. Kim"></div>
+                <div class="input-group"><label>Birth Date</label><input type="date" id="namingDate"></div>
+                <div class="input-group"><label>Gender</label>
+                    <select id="namingGender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <button class="primary-button" onclick="app.generateName()">Generate Names (3 Credits)</button>
+            </div>
+            <div id="namingResult" class="result-box" style="display: none;">
+                <div
+                    style="background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--accent-gold);">
+                    <h3 style="color: var(--accent-gold); text-align: center; margin-bottom: 15px;">Recommended Names
+                    </h3>
+                    <p id="namingSummary"
+                        style="text-align: center; margin-bottom: 20px; color: var(--text-secondary);"></p>
+                    <div id="namingList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODAY SCREEN -->
+    <div id="todayScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <div class="main-header">
+                <div class="logo" style="font-size: 2rem;">Daily Fortune</div>
+            </div>
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="primary-button" onclick="app.getDailyFortune()">Reveal Today's Fortune</button>
+            </div>
+            <div id="todayResult" class="result-box" style="display: none; text-align: center;">
+                <div id="fortuneEmoji" style="font-size: 5rem; margin-bottom: 10px;"></div>
+                <h2 id="fortuneTitle" style="color: var(--accent-gold); margin-bottom: 15px;"></h2>
+                <p id="fortuneMessage" style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px;"></p>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+                    <h4 style="color: var(--accent-gold);">Lucky Numbers</h4>
+                    <p id="luckyNumbers" style="font-size: 2rem; letter-spacing: 5px; margin-top: 10px;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAJU SCREEN -->
+    <div id="sajuScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <div class="main-header">
+                <div class="logo" style="font-size: 2rem;">Saju Analysis</div>
+            </div>
+            <div class="input-section">
+                <div class="input-group"><label>Name</label><input type="text" id="sajuName"></div>
+                <div class="input-group"><label>Birth Date</label><input type="date" id="sajuDate"></div>
+                <button class="primary-button" onclick="app.analyzeSaju()">Analyze (2 Credits)</button>
+            </div>
+            <div id="sajuResult" class="result-box" style="display: none;">
+                <div style="background: var(--card-bg); padding: 20px; border-radius: 15px;">
+                    <h3 id="sajuTitle" style="color: var(--accent-gold); text-align: center;"></h3>
+                    <p id="sajuText" style="margin-top: 15px; line-height: 1.6;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAROT SCREEN -->
+    <div id="tarotScreen" class="screen">
+        <div class="container">
+            <button class="back-btn" onclick="app.showScreen('mainScreen')">← Back</button>
+            <div class="main-header">
+                <div class="logo" style="font-size: 2rem;">AI Tarot</div>
+            </div>
+            <div style="text-align: center;">
+                <button class="primary-button" onclick="app.drawTarot()">Draw Cards (1 Credit)</button>
+            </div>
+            <div id="tarotResult" class="result-box" style="display: none; text-align: center;">
+                <div style="font-size: 4rem;">🃏 ☀️ 👑</div>
+                <p style="margin-top: 20px;">Your cards reveal a path of success and abundance.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== MONOLITHIC APP LOGIC =====
+        const app = {
+            credits: 3,
+
+            // DATA
+            namingDB: {
+                wood: {
+                    male: [{ h: '건우(建宇)', m: '세상을 세우는 큰 집', s: 98 }, { h: '동현(東賢)', m: '동방의 어진 성인', s: 99 }],
+                    female: [{ h: '가연(佳娟)', m: '아름다운 인재', s: 98 }, { h: '규리(奎利)', m: '세상을 이롭게 함', s: 99 }]
+                },
+                fire: {
+                    male: [{ h: '태양(太陽)', m: '세상의 빛', s: 100 }, { h: '도현(道賢)', m: '지혜의 정점', s: 99 }],
+                    female: [{ h: '지아(智雅)', m: '지혜롭고 우아함', s: 99 }, { h: '나윤(娜允)', m: '진실된 리더', s: 98 }]
+                },
+                earth: {
+                    male: [{ h: '민재(敏宰)', m: '세상을 다스림', s: 99 }, { h: '준우(俊宇)', m: '우주를 품음', s: 98 }],
+                    female: [{ h: '서현(瑞賢)', m: '어진 덕망', s: 99 }, { h: '유진(有珍)', m: '귀한 보배', s: 98 }]
+                },
+                metal: {
+                    male: [{ h: '시현(施賢)', m: '베푸는 현인', s: 98 }, { h: '지호(智浩)', m: '대범한 리더', s: 99 }],
+                    female: [{ h: '서연(瑞然)', m: '상서로운 기운', s: 99 }, { h: '채원(采源)', m: '풍요의 근원', s: 98 }]
+                },
+                water: {
+                    male: [{ h: '우진(宇眞)', m: '우주의 진리', s: 99 }, { h: '민준(珉俊)', m: '귀한 인재', s: 98 }],
+                    female: [{ h: '수아(秀雅)', m: '빼어난 아름다움', s: 98 }, { h: '지우(智雨)', m: '지혜의 비', s: 99 }]
+                }
+            },
+
+            // UTILS
+            updateCredits: function () {
+                document.getElementById('userCredits').textContent = this.credits;
+            },
+
+            showScreen: function (id) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+                window.scrollTo(0, 0);
+            },
+
+            showLoading: function (cb) {
+                const overlay = document.getElementById('loadingOverlay');
+                overlay.classList.add('active');
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                    if (cb) cb();
+                }, 1500);
+            },
+
+            // FEATURES
+            generateName: function () {
+                const surname = document.getElementById('namingSurname').value;
+                const date = document.getElementById('namingDate').value;
+                const gender = document.getElementById('namingGender').value;
+
+                if (!surname || !date) { alert("Please enter all fields"); return; }
+                if (this.credits < 3) { alert("Not enough credits!"); return; }
+
+                this.showLoading(() => {
+                    this.credits -= 3;
+                    this.updateCredits();
+
+                    const elements = ['wood', 'fire', 'earth', 'metal', 'water'];
+                    const el = elements[Math.floor(Math.random() * elements.length)];
+                    const list = this.namingDB[el][gender];
+
+                    document.getElementById('namingSummary').textContent = `Based on your birth element [${el.toUpperCase()}], these names bring maximum success.`;
+
+                    const html = list.map(item => `
+                        <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h3 style="color:var(--accent-gold); margin:0;">${surname}${item.h.split('(')[0]} <span style="font-size:0.8em; color:#aaa;">${item.h}</span></h3>
+                                <span style="color:#4caf50; font-weight:bold; font-size:1.2rem;">${item.s}</span>
+                            </div>
+                            <p style="margin-top:5px; color:#ddd;">${item.m}</p>
+                        </div>
+                    `).join('');
+
+                    document.getElementById('namingList').innerHTML = html;
+                    document.getElementById('namingResult').style.display = 'block';
+                });
+            },
+
+            getDailyFortune: function () {
+                this.showLoading(() => {
+                    const msgs = [
+                        { e: '⭐', t: 'Great Luck', m: 'Everything will go your way today.' },
+                        { e: '🌈', t: 'Good Luck', m: 'Small happiness awaits you.' },
+                        { e: '✨', t: 'Magic Day', m: 'Unexpected joy is coming.' }
+                    ];
+                    const f = msgs[Math.floor(Math.random() * msgs.length)];
+
+                    document.getElementById('fortuneEmoji').textContent = f.e;
+                    document.getElementById('fortuneTitle').textContent = f.t;
+                    document.getElementById('fortuneMessage').textContent = f.m;
+
+                    const nums = [];
+                    for (let i = 0; i < 6; i++) nums.push(Math.floor(Math.random() * 45) + 1);
+                    document.getElementById('luckyNumbers').textContent = nums.join(', ');
+
+                    document.getElementById('todayResult').style.display = 'block';
+                });
+            },
+
+            analyzeSaju: function () {
+                const name = document.getElementById('sajuName').value;
+                if (!name) { alert("Enter name"); return; }
+                if (this.credits < 2) { alert("Not enough credits"); return; }
+
+                this.showLoading(() => {
+                    this.credits -= 2;
+                    this.updateCredits();
+                    document.getElementById('sajuTitle').textContent = `Analysis for ${name}`;
+                    document.getElementById('sajuText').textContent = "Your energy is strong like a mountain. Success is in your future.";
+                    document.getElementById('sajuResult').style.display = 'block';
+                });
+            },
+
+            drawTarot: function () {
+                if (this.credits < 1) { alert("Not enough credits"); return; }
+                this.showLoading(() => {
+                    this.credits -= 1;
+                    this.updateCredits();
+                    document.getElementById('tarotResult').style.display = 'block';
+                });
+            }
+        };
+
+        // Init
+        console.log("Mystic AI Final Loaded");
+    </script>
+</body>
+
+</html>

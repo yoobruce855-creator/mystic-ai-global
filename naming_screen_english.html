@@ -1,0 +1,108 @@
+<div id="namingScreen" class="screen">
+    <div class="stars"></div>
+    <div class="container">
+        <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+        <div class="service-header">
+            <div class="service-icon">✍️</div>
+            <h1>AI Naming Center</h1>
+            <p>Professional name recommendations based on Saju analysis</p>
+        </div>
+        <div class="input-section">
+            <h3>Baby Information</h3>
+
+            <div class="input-group">
+                <label>Surname *</label>
+                <input type="text" id="namingSurname" placeholder="e.g. Kim, Lee, Park" maxlength="2">
+            </div>
+
+            <div class="input-group">
+                <label>Gender *</label>
+                <select id="namingGender">
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Birth Date *</label>
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+                    <input type="number" id="namingYear" placeholder="Year" min="1900" max="2100">
+                    <input type="number" id="namingMonth" placeholder="Month" min="1" max="12">
+                    <input type="number" id="namingDay" placeholder="Day" min="1" max="31">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Calendar Type *</label>
+                <select id="namingCalendar">
+                    <option value="solar">Solar</option>
+                    <option value="lunar">Lunar</option>
+                </select>
+                <small>Most cases use Solar calendar</small>
+            </div>
+
+            <div class="input-group">
+                <label>Birth Time *</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="number" id="namingHour" placeholder="Hour" min="0" max="23">
+                    <input type="number" id="namingMinute" placeholder="Minute" min="0" max="59">
+                </div>
+                <small>If unknown, use 12:00</small>
+            </div>
+
+            <button class="primary-button" onclick="generateNamePreview()">
+                Free Preview (2 Names)
+            </button>
+        </div>
+
+        <!-- Preview Results -->
+        <div id="namingPreview" class="hidden" style="margin-top: 3rem;">
+            <div
+                style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                <div
+                    style="text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <h2 style="color: var(--accent-gold); margin-bottom: 1rem;">Saju Analysis Preview</h2>
+                    <p id="namingPreviewSummary" style="color: var(--text-secondary); line-height: 1.8;"></p>
+                </div>
+
+                <h3 style="color: var(--accent-gold); text-align: center; margin-bottom: 1.5rem;">Recommended Names
+                    Preview (2)</h3>
+                <div id="namingPreviewList" style="margin-bottom: 2rem;"></div>
+
+                <div
+                    style="text-align: center; padding: 2rem; background: hsla(45, 100%, 60%, 0.1); border-radius: 15px;">
+                    <p style="color: var(--accent-gold); font-size: 1.1rem; margin-bottom: 1rem;">
+                        Want to see all 5 names with detailed analysis?
+                    </p>
+                    <button class="primary-button" onclick="generateNameFull()"
+                        style="max-width: 400px; margin: 0 auto;">
+                        View Full Results (3 Credits)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Results -->
+        <div id="namingResult" class="hidden" style="margin-top: 3rem;">
+            <div
+                style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                <div
+                    style="text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <h2 style="color: var(--accent-gold); margin-bottom: 1rem;">Complete Name Recommendations</h2>
+                    <p id="namingFullSummary" style="color: var(--text-secondary); line-height: 1.8;"></p>
+                    <div
+                        style="margin-top: 1rem; padding: 1rem; background: hsla(270, 70%, 30%, 0.3); border-radius: 10px;">
+                        <p style="color: var(--primary-purple-light); font-size: 0.9rem;">
+                            <strong>Saju Details:</strong> <span id="namingSajuDetail"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-gold); text-align: center; margin-bottom: 2rem;">Top 5 Recommended Names
+                </h3>
+                <div id="namingFullList"></div>
+            </div>
+        </div>
+    </div>
+</div>

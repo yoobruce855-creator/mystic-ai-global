@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI - 세계 1위 AI 사주 & 타로</title>
+    <meta name="description" content="AI 기반 타로, 사주팔자, 꿈해몽, 궁합 서비스로 당신의 미래를 엿보세요">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- User Credits Display -->
+    <div class="credits-bar">
+        <div class="credits-info">
+            <span class="credit-icon">💎</span>
+            <span id="userCredits">3</span> 크레딧
+        </div>
+        <button class="upgrade-btn" id="upgradeBtn">⭐ 프리미엄 가입</button>
+    </div>
+
+    <!-- Main Screen -->
+    <div id="mainScreen" class="screen active">
+        <div class="stars"></div>
+        <div class="container">
+            <header class="header">
+                <div class="logo">
+                    <span class="logo-icon">🔮</span>
+                    <h1>Mystic AI</h1>
+                </div>
+                <p class="tagline">AI가 당신의 운명을 읽어드립니다</p>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1,234,567</span>
+                        <span class="stat-label">누적 이용자</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98.7%</span>
+                        <span class="stat-label">만족도</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Daily Fortune Banner -->
+            <div class="daily-fortune-banner">
+                <div class="banner-content">
+                    <h3>🌟 오늘의 운세</h3>
+                    <p id="dailyFortune">오늘은 새로운 기회가 찾아오는 날입니다. 긍정적인 마음으로 하루를 시작하세요!</p>
+                    <span class="lucky-number">행운의 숫자: <strong>7, 14, 23</strong></span>
+                </div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card" data-service="tarot">
+                    <div class="premium-badge">인기</div>
+                    <div class="card-icon">🎴</div>
+                    <h2>타로 카드</h2>
+                    <p>22장 메이저 아르카나로 미래를 예측</p>
+                    <div class="service-features">
+                        <span>✓ 3장 스프레드</span>
+                        <span>✓ 상세 해석</span>
+                        <span class="premium-feature">✓ AI 맞춤 조언 (프리미엄)</span>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+
+                <div class="service-card" data-service="saju">
+                    <div class="premium-badge premium">프리미엄</div>
+                    <div class="card-icon">📿</div>
+                    <h2>사주팔자</h2>
+                    <p>정통 사주팔자 분석과 운세</p>
+                    <div class="service-features">
+                        <span>✓ 천간지지 분석</span>
+                        <span>✓ 대운/세운</span>
+                        <span class="premium-feature">✓ 평생 운세 (프리미엄)</span>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+
+                <div class="service-card" data-service="dream">
+                    <div class="card-icon">🌙</div>
+                    <h2>꿈해몽</h2>
+                    <p>5,000개 이상의 꿈 해석 데이터</p>
+                    <div class="service-features">
+                        <span>✓ AI 분석</span>
+                        <span>✓ 키워드 매칭</span>
+                        <span class="premium-feature">✓ 길몽/흉몽 판단 (프리미엄)</span>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+
+                <div class="service-card" data-service="compatibility">
+                    <div class="premium-badge">NEW</div>
+                    <div class="card-icon">💕</div>
+                    <h2>궁합 보기</h2>
+                    <p>연애, 결혼, 사업 궁합 분석</p>
+                    <div class="service-features">
+                        <span>✓ 띠별 궁합</span>
+                        <span>✓ 사주 궁합</span>
+                        <span class="premium-feature">✓ 궁합 개선법 (프리미엄)</span>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+
+                <div class="service-card" data-service="naming">
+                    <div class="card-icon">✍️</div>
+                    <h2>작명/개명</h2>
+                    <p>성명학 기반 이름 분석 및 추천</p>
+                    <div class="service-features">
+                        <span>✓ 이름 분석</span>
+                        <span>✓ 획수 계산</span>
+                        <span class="premium-feature">✓ 맞춤 작명 (프리미엄)</span>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+
+                <div class="service-card" data-service="today">
+                    <div class="card-icon">📅</div>
+                    <h2>오늘의 운세</h2>
+                    <p>매일 업데이트되는 맞춤 운세</p>
+                    <div class="service-features">
+                        <span>✓ 일일 운세</span>
+                        <span>✓ 주간 운세</span>
+                        <span class="premium-feature">✓ 월간 운세 (프리미엄)</span>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+
+            <!-- Premium Features Section -->
+            <div class="premium-section">
+                <h2>⭐ 프리미엄 멤버십 혜택</h2>
+                <div class="premium-grid">
+                    <div class="premium-item">
+                        <div class="premium-icon">🎯</div>
+                        <h3>무제한 이용</h3>
+                        <p>모든 서비스 무제한 사용</p>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-icon">🤖</div>
+                        <h3>AI 상담</h3>
+                        <p>1:1 맞춤 AI 운세 상담</p>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-icon">📊</div>
+                        <h3>상세 분석</h3>
+                        <p>평생 운세 및 대운 분석</p>
+                    </div>
+                    <div class="premium-item">
+                        <div class="premium-icon">🎁</div>
+                        <h3>특별 혜택</h3>
+                        <p>매월 신규 콘텐츠 제공</p>
+                    </div>
+                </div>
+                <button class="cta-button" id="premiumCTA">
+                    <span>지금 프리미엄 시작하기</span>
+                    <span class="price">월 9,900원</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarot Screen -->
+    <div id="tarotScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-button" data-back="main">← 돌아가기</button>
+
+            <div class="service-header">
+                <div class="service-icon">🎴</div>
+                <h1>타로 카드 리딩</h1>
+                <p>마음을 가라앉히고 질문을 떠올리세요</p>
+                <div class="cost-badge">💎 1 크레딧 소모</div>
+            </div>
+
+            <div id="tarotInput" class="input-section">
+                <div class="input-group">
+                    <label for="tarotQuestion">어떤 것이 궁금하신가요?</label>
+                    <textarea id="tarotQuestion" placeholder="예: 이번 달 나의 연애운은 어떨까요?" rows="4"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="tarotSpread">스프레드 선택</label>
+                    <select id="tarotSpread">
+                        <option value="three">3장 스프레드 (과거/현재/미래)</option>
+                        <option value="celtic" disabled>켈틱 크로스 (10장) - 프리미엄 전용</option>
+                        <option value="relationship" disabled>연애 스프레드 (7장) - 프리미엄 전용</option>
+                    </select>
+                </div>
+                <button class="primary-button" id="drawTarotBtn">
+                    <span>카드 뽑기 (1 크레딧)</span>
+                    <span class="button-glow"></span>
+                </button>
+            </div>
+
+            <div id="tarotCards" class="tarot-cards hidden">
+                <div class="cards-container">
+                    <div class="tarot-card" data-card="0">
+                        <div class="card-back">🎴</div>
+                        <div class="card-front"></div>
+                    </div>
+                    <div class="tarot-card" data-card="1">
+                        <div class="card-back">🎴</div>
+                        <div class="card-front"></div>
+                    </div>
+                    <div class="tarot-card" data-card="2">
+                        <div class="card-back">🎴</div>
+                        <div class="card-front"></div>
+                    </div>
+                </div>
+                <p class="instruction">카드를 선택하세요</p>
+            </div>
+
+            <div id="tarotResult" class="result-section hidden">
+                <div class="result-content"></div>
+                <div class="premium-upsell">
+                    <h4>🌟 더 상세한 분석이 필요하신가요?</h4>
+                    <p>프리미엄 회원은 AI가 당신의 상황에 맞춘 구체적인 조언을 제공합니다.</p>
+                    <button class="upgrade-result-btn">프리미엄으로 업그레이드</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saju Screen -->
+    <div id="sajuScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-button" data-back="main">← 돌아가기</button>
+
+            <div class="service-header">
+                <div class="service-icon">📿</div>
+                <h1>사주팔자</h1>
+                <p>정통 사주팔자로 당신의 운명을 분석합니다</p>
+                <div class="cost-badge premium-badge">💎 2 크레딧 소모</div>
+            </div>
+
+            <div id="sajuInput" class="input-section">
+                <div class="input-group">
+                    <label for="birthDate">생년월일</label>
+                    <input type="date" id="birthDate" max="2025-12-31">
+                </div>
+                <div class="input-group">
+                    <label for="birthTime">출생 시간 (선택)</label>
+                    <input type="time" id="birthTime">
+                    <small>정확한 시간을 모르시면 비워두세요</small>
+                </div>
+                <div class="input-group">
+                    <label for="gender">성별</label>
+                    <select id="gender">
+                        <option value="">선택하세요</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="sajuType">분석 유형</label>
+                    <select id="sajuType">
+                        <option value="basic">기본 운세 (2 크레딧)</option>
+                        <option value="detailed" disabled>상세 사주팔자 (프리미엄 전용)</option>
+                        <option value="lifetime" disabled>평생 운세 (프리미엄 전용)</option>
+                    </select>
+                </div>
+                <button class="primary-button" id="getSajuBtn">
+                    <span>사주 보기 (2 크레딧)</span>
+                    <span class="button-glow"></span>
+                </button>
+            </div>
+
+            <div id="sajuResult" class="result-section hidden">
+                <div class="result-content"></div>
+                <div class="premium-upsell">
+                    <h4>🌟 평생 운세가 궁금하신가요?</h4>
+                    <p>프리미엄 회원은 대운, 세운, 월운까지 상세하게 확인할 수 있습니다.</p>
+                    <button class="upgrade-result-btn">프리미엄으로 업그레이드</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dream Screen -->
+    <div id="dreamScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-button" data-back="main">← 돌아가기</button>
+
+            <div class="service-header">
+                <div class="service-icon">🌙</div>
+                <h1>꿈해몽</h1>
+                <p>5,000개 이상의 꿈 해석 데이터베이스</p>
+                <div class="cost-badge">💎 1 크레딧 소모</div>
+            </div>
+
+            <div id="dreamInput" class="input-section">
+                <div class="input-group">
+                    <label for="dreamContent">어떤 꿈을 꾸셨나요?</label>
+                    <textarea id="dreamContent" placeholder="꿈의 내용을 자세히 적어주세요... 예: 큰 뱀이 나타나서 집 안으로 들어왔어요"
+                        rows="6"></textarea>
+                </div>
+                <div class="dream-keywords">
+                    <label>자주 검색되는 꿈:</label>
+                    <div class="keyword-tags">
+                        <span class="keyword-tag">뱀</span>
+                        <span class="keyword-tag">돼지</span>
+                        <span class="keyword-tag">물</span>
+                        <span class="keyword-tag">불</span>
+                        <span class="keyword-tag">임신</span>
+                        <span class="keyword-tag">죽음</span>
+                        <span class="keyword-tag">돈</span>
+                        <span class="keyword-tag">집</span>
+                    </div>
+                </div>
+                <button class="primary-button" id="interpretDreamBtn">
+                    <span>꿈 해석하기 (1 크레딧)</span>
+                    <span class="button-glow"></span>
+                </button>
+            </div>
+
+            <div id="dreamResult" class="result-section hidden">
+                <div class="result-content"></div>
+                <div class="premium-upsell">
+                    <h4>🌟 길몽인지 흉몽인지 정확히 알고 싶으신가요?</h4>
+                    <p>프리미엄 회원은 꿈의 길흉 판단과 대처법까지 제공받습니다.</p>
+                    <button class="upgrade-result-btn">프리미엄으로 업그레이드</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compatibility Screen -->
+    <div id="compatibilityScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-button" data-back="main">← 돌아가기</button>
+
+            <div class="service-header">
+                <div class="service-icon">💕</div>
+                <h1>궁합 보기</h1>
+                <p>두 사람의 궁합을 분석합니다</p>
+                <div class="cost-badge">💎 2 크레딧 소모</div>
+            </div>
+
+            <div id="compatibilityInput" class="input-section">
+                <h3>나의 정보</h3>
+                <div class="input-group">
+                    <label for="myBirthDate">생년월일</label>
+                    <input type="date" id="myBirthDate" max="2025-12-31">
+                </div>
+                <div class="input-group">
+                    <label for="myGender">성별</label>
+                    <select id="myGender">
+                        <option value="">선택하세요</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+
+                <h3 style="margin-top: 2rem;">상대방 정보</h3>
+                <div class="input-group">
+                    <label for="partnerBirthDate">생년월일</label>
+                    <input type="date" id="partnerBirthDate" max="2025-12-31">
+                </div>
+                <div class="input-group">
+                    <label for="partnerGender">성별</label>
+                    <select id="partnerGender">
+                        <option value="">선택하세요</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="compatType">궁합 유형</label>
+                    <select id="compatType">
+                        <option value="love">연애 궁합</option>
+                        <option value="marriage">결혼 궁합</option>
+                        <option value="business">사업 궁합</option>
+                    </select>
+                </div>
+
+                <button class="primary-button" id="checkCompatibilityBtn">
+                    <span>궁합 보기 (2 크레딧)</span>
+                    <span class="button-glow"></span>
+                </button>
+            </div>
+
+            <div id="compatibilityResult" class="result-section hidden">
+                <div class="pricing-cards">
+                    <div class="pricing-card">
+                        <h3>월간 플랜</h3>
+                        <div class="price-tag">
+                            <span class="price">9,900원</span>
+                            <span class="period">/월</span>
+                        </div>
+                        <ul class="benefits">
+                            <li>✓ 모든 서비스 무제한 이용</li>
+                            <li>✓ AI 맞춤 상담</li>
+                            <li>✓ 상세 분석 리포트</li>
+                            <li>✓ 광고 제거</li>
+                        </ul>
+                        <button class="select-plan-btn" data-plan="monthly">선택하기</button>
+                    </div>
+
+                    <div class="pricing-card featured">
+                        <div class="best-badge">BEST</div>
+                        <h3>연간 플랜</h3>
+                        <div class="price-tag">
+                            <span class="price">99,000원</span>
+                            <span class="period">/년</span>
+                        </div>
+                        <div class="discount">월 8,250원 (17% 할인)</div>
+                        <ul class="benefits">
+                            <li>✓ 월간 플랜의 모든 혜택</li>
+                            <li>✓ 평생 운세 분석</li>
+                            <li>✓ 우선 고객 지원</li>
+                            <li>✓ 매월 신규 콘텐츠</li>
+                        </ul>
+                        <button class="select-plan-btn" data-plan="yearly">선택하기</button>
+                    </div>
+
+                    <div class="pricing-card">
+                        <h3>크레딧 충전</h3>
+                        <div class="price-tag">
+                            <span class="price">4,900원</span>
+                            <span class="period">/10 크레딧</span>
+                        </div>
+                        <ul class="benefits">
+                            <li>✓ 원하는 만큼만 사용</li>
+                            <li>✓ 유효기간 1년</li>
+                            <li>✓ 환불 가능</li>
+                            <li>✓ 부담 없는 시작</li>
+                        </ul>
+                        <button class="select-plan-btn" data-plan="credits">충전하기</button>
+                        <p>이 서비스를 이용하려면 <strong id="requiredCredits">1</strong> 크레딧이 필요합니다.</p>
+                        <p>현재 보유 크레딧: <strong id="currentCredits">0</strong></p>
+                        <div class="modal-actions">
+                            <button class="primary-button" id="buyCreditsBtn">크레딧 충전하기</button>
+                            <button class="secondary-button modal-close">취소</button>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="script.js"></script>
+</body>
+
+</html>

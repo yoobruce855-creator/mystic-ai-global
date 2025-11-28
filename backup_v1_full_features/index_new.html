@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI - AI 타로 & 사주</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="credits-bar">
+        <div class="credits-info">
+            <span class="credit-icon">💎</span>
+            <span id="userCredits">3</span> 크레딧
+        </div>
+        <button class="upgrade-btn" id="upgradeBtn">⭐ 프리미엄 가입</button>
+    </div>
+
+    <div id="mainScreen" class="screen active">
+        <div class="stars"></div>
+        <div class="container">
+            <header class="header">
+                <div class="logo">
+                    <span class="logo-icon">🔮</span>
+                    <h1>Mystic AI</h1>
+                </div>
+                <p class="tagline">AI가 당신의 운명을 읽어드립니다</p>
+            </header>
+
+            <div class="services-grid">
+                <div class="service-card" data-service="tarot">
+                    <div class="card-icon">🎴</div>
+                    <h2>타로 카드</h2>
+                    <p>22장 메이저 아르카나로 미래를 예측</p>
+                </div>
+
+                <div class="service-card" data-service="saju">
+                    <div class="card-icon">📿</div>
+                    <h2>사주팔자</h2>
+                    <p>정통 사주팔자 분석과 운세</p>
+                </div>
+
+                <div class="service-card" data-service="dream">
+                    <div class="card-icon">🌙</div>
+                    <h2>꿈해몽</h2>
+                    <p>5,000개 이상의 꿈 해석 데이터</p>
+                </div>
+
+                <div class="service-card" data-service="compatibility">
+                    <div class="card-icon">💕</div>
+                    <h2>궁합 보기</h2>
+                    <p>연애, 결혼, 사업 궁합 분석</p>
+                </div>
+
+                <div class="service-card" data-service="naming">
+                    <div class="card-icon">✍️</div>
+                    <h2>작명/개명</h2>
+                    <p>성명학 기반 이름 분석</p>
+                </div>
+
+                <div class="service-card" data-service="today">
+                    <div class="card-icon">📅</div>
+                    <h2>오늘의 운세</h2>
+                    <p>매일 업데이트되는 맞춤 운세</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

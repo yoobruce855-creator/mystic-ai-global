@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic AI - With Naming</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="loading.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+
+        .back-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border-glow);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="credits-bar">
+        <div class="credits-info">
+            <span class="credit-icon">💎</span>
+            <span id="userCredits">10</span> Credits
+        </div>
+        <button class="upgrade-btn">⭐ Premium</button>
+    </div>
+
+    <!-- MAIN SCREEN -->
+    <div id="mainScreen" class="screen active">
+        <div class="stars"></div>
+        <div class="container">
+            <header class="header">
+                <div class="logo">
+                    <span class="logo-icon">🔮</span>
+                    <h1>Mystic AI</h1>
+                </div>
+                <p class="tagline">Professional AI-Powered Fortune Telling</p>
+            </header>
+
+            <div class="services-grid">
+                <div class="service-card" onclick="showScreen('namingScreen')">
+                    <div class="card-icon">✍️</div>
+                    <h2>AI Naming Center</h2>
+                    <p>사주 기반 최고의 이름 추천</p>
+                </div>
+                <div class="service-card" onclick="showScreen('todayScreen')">
+                    <div class="card-icon">📅</div>
+                    <h2>Daily Fortune</h2>
+                    <p>Personalized daily guidance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI NAMING CENTER SCREEN -->
+    <div id="namingScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">✍️</div>
+                <h1>AI Naming Center (AI 작명소)</h1>
+                <p>사주팔자 기반 최고의 이름을 추천해드립니다</p>
+            </div>
+            <div class="input-section">
+                <h3>📋 아기 정보 입력</h3>
+
+                <div class="input-group">
+                    <label>성씨 (Surname) *</label>
+                    <input type="text" id="namingSurname" placeholder="예: 김, 이, 박" maxlength="2">
+                </div>
+
+                <div class="input-group">
+                    <label>성별 (Gender) *</label>
+                    <select id="namingGender">
+                        <option value="">선택하세요</option>
+                        <option value="male">남아 (Male)</option>
+                        <option value="female">여아 (Female)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>생년월일 (Birth Date) *</label>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+                        <input type="number" id="namingYear" placeholder="년 (Year)" min="1900" max="2100">
+                        <input type="number" id="namingMonth" placeholder="월" min="1" max="12">
+                        <input type="number" id="namingDay" placeholder="일" min="1" max="31">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>력 구분 (Calendar Type) *</label>
+                    <select id="namingCalendar">
+                        <option value="solar">양력 (Solar)</option>
+                        <option value="lunar">음력 (Lunar)</option>
+                    </select>
+                    <small>대부분의 경우 양력입니다. 출생신고서를 확인하세요.</small>
+                </div>
+
+                <div class="input-group">
+                    <label>태어난 시간 (Birth Time) *</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <input type="number" id="namingHour" placeholder="시 (Hour)" min="0" max="23">
+                        <input type="number" id="namingMinute" placeholder="분 (Minute)" min="0" max="59">
+                    </div>
+                    <small>정확한 시간을 모르시면 12:00으로 입력하세요.</small>
+                </div>
+
+                <button class="primary-button" onclick="generateNamePreview()">
+                    🔍 무료 미리보기 (Free Preview)
+                </button>
+            </div>
+
+            <!-- 무료 미리보기 결과 -->
+            <div id="namingPreview" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div
+                        style="text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <h2 style="color: var(--accent-gold); margin-bottom: 1rem;">📊 사주 분석 미리보기</h2>
+                        <p id="namingPreviewSummary" style="color: var(--text-secondary); line-height: 1.8;"></p>
+                    </div>
+
+                    <h3 style="color: var(--accent-gold); text-align: center; margin-bottom: 1.5rem;">✨ 추천 이름 미리보기 (2개)
+                    </h3>
+                    <div id="namingPreviewList" style="margin-bottom: 2rem;"></div>
+
+                    <div
+                        style="text-align: center; padding: 2rem; background: hsla(45, 100%, 60%, 0.1); border-radius: 15px;">
+                        <p style="color: var(--accent-gold); font-size: 1.1rem; margin-bottom: 1rem;">
+                            🎁 전체 추천 이름 5개와 상세 분석을 보시려면?
+                        </p>
+                        <button class="primary-button" onclick="generateNameFull()"
+                            style="max-width: 400px; margin: 0 auto;">
+                            🌟 전체 결과 보기 (3 Credits)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 유료 전체 결과 -->
+            <div id="namingResult" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div
+                        style="text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <h2 style="color: var(--accent-gold); margin-bottom: 1rem;">📊 사주 분석</h2>
+                        <p id="namingSummary" style="color: var(--text-secondary); line-height: 1.8;"></p>
+                        <div id="namingSajuDetail"
+                            style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        </div>
+                    </div>
+
+                    <h2 style="color: var(--accent-gold); text-align: center; margin-bottom: 2rem;">✨ 추천 이름 (5개)</h2>
+                    <div id="namingList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODAY SCREEN -->
+    <div id="todayScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">📅</div>
+                <h1>Daily Fortune</h1>
+                <p>Your personalized guidance for today</p>
+            </div>
+            <div style="text-align: center; margin: 3rem 0;">
+                <button class="primary-button" onclick="getDailyFortune()" style="max-width: 400px; margin: 0 auto;">Get
+                    Today's Fortune (Free!)</button>
+            </div>
+            <div id="todayResult" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div style="text-align: center; font-size: 5rem; margin-bottom: 1rem;" id="fortuneEmoji"></div>
+                    <h2 style="color: var(--accent-gold); text-align: center; margin-bottom: 1rem;" id="fortuneTitle">
+                    </h2>
+                    <p style="color: var(--text-secondary); text-align: center; font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;"
+                        id="fortuneMessage"></p>
+                    <div
+                        style="background: hsla(45, 100%, 60%, 0.1); padding: 2rem; border-radius: 15px; text-align: center;">
+                        <p style="color: var(--accent-gold); font-weight: 600; margin-bottom: 1rem;">Lucky Numbers</p>
+                        <p style="font-size: 2rem; color: white;" id="luckyNumbers"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="crystal-ball"></div>
+        <div class="loading-text" id="loadingText">Consulting the Stars...</div>
+    </div>
+
+    <script src="naming_data.js"></script>
+    <script src="professional.js?v=9"></script>
+</body>
+
+</html>

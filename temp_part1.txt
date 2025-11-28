@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Mystic AI - Professional Fortune Telling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="loading.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+
+        .back-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border-glow);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="credits-bar">
+        <div class="credits-info">
+            <span class="credit-icon">💎</span>
+            <span id="userCredits">3</span> Credits
+        </div>
+        <button class="upgrade-btn">⭐ Premium</button>
+    </div>
+
+    <div id="mainScreen" class="screen active">
+        <div class="stars"></div>
+        <div class="container">
+            <header class="header">
+                <div class="logo">
+                    <span class="logo-icon">🔮</span>
+                    <h1>Mystic AI</h1>
+                </div>
+                <p class="tagline">Professional AI-Powered Fortune Telling</p>
+            </header>
+
+            <div class="services-grid">
+                <div class="service-card" onclick="showScreen('tarotScreen')">
+                    <div class="card-icon">🎴</div>
+                    <h2>Tarot Reading</h2>
+                    <p>Deep insights from 22 Major Arcana cards</p>
+                </div>
+                <div class="service-card" onclick="showScreen('sajuScreen')">
+                    <div class="card-icon">📿</div>
+                    <h2>Saju (Four Pillars)</h2>
+                    <p>Traditional Korean fortune based on birth data</p>
+                </div>
+                <div class="service-card" onclick="showScreen('dreamScreen')">
+                    <div class="card-icon">🌙</div>
+                    <h2>Dream Analysis</h2>
+                    <p>100+ symbols with detailed interpretations</p>
+                </div>
+                <div class="service-card" onclick="showScreen('compatibilityScreen')">
+                    <div class="card-icon">💕</div>
+                    <h2>Compatibility</h2>
+                    <p>Detailed analysis based on birth information</p>
+                </div>
+                <div class="service-card" onclick="showScreen('namingScreen')">
+                    <div class="card-icon">✍️</div>
+                    <h2>Name Analysis</h2>
+                    <p>Numerology and meaning analysis</p>
+                </div>
+                <div class="service-card" onclick="showScreen('todayScreen')">
+                    <div class="card-icon">📅</div>
+                    <h2>Daily Fortune</h2>
+                    <p>Personalized daily guidance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tarotScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">🎴</div>
+                <h1>Tarot Reading</h1>
+                <p>Draw 3 cards for past, present, and future insights</p>
+            </div>
+            <div class="tarot-cards">
+                <div class="cards-container">
+                    <div class="tarot-card" onclick="drawTarotCards()" style="cursor: pointer;">
+                        <div class="card-back">🎴</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">Click to draw 3 cards (1
+                    credit)</p>
+                <div id="tarotResult" class="hidden" style="margin-top: 3rem;">
+                    <div class="cards-container" style="gap: 2rem;">
+                        <div
+                            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 2px solid var(--border-glow); text-align: center; min-width: 250px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 1rem;">PAST</h4>
+                            <div id="card1Emoji" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+                            <h3 id="card1Name" style="color: var(--accent-gold); margin-bottom: 0.5rem;"></h3>
+                            <p id="card1Meaning"
+                                style="color: var(--primary-purple-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            </p>
+                            <p id="card1Description" style="color: var(--text-secondary); line-height: 1.6;"></p>
+                        </div>
+                        <div
+                            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 2px solid var(--border-glow); text-align: center; min-width: 250px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 1rem;">PRESENT</h4>
+                            <div id="card2Emoji" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+                            <h3 id="card2Name" style="color: var(--accent-gold); margin-bottom: 0.5rem;"></h3>
+                            <p id="card2Meaning"
+                                style="color: var(--primary-purple-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            </p>
+                            <p id="card2Description" style="color: var(--text-secondary); line-height: 1.6;"></p>
+                        </div>
+                        <div
+                            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 2px solid var(--border-glow); text-align: center; min-width: 250px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 1rem;">FUTURE</h4>
+                            <div id="card3Emoji" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+                            <h3 id="card3Name" style="color: var(--accent-gold); margin-bottom: 0.5rem;"></h3>
+                            <p id="card3Meaning"
+                                style="color: var(--primary-purple-light); font-weight: 600; margin-bottom: 0.5rem;">
+                            </p>
+                            <p id="card3Description" style="color: var(--text-secondary); line-height: 1.6;"></p>
+                        </div>
+                    </div>
+                    <button class="primary-button" onclick="drawTarotCards()"
+                        style="max-width: 400px; margin: 2rem auto; display: block;">Draw Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sajuScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">🎴</div>
+                <h1>Tojeongbigyeol Saju</h1>
+                <p>Traditional Korean fortune telling based on birth data</p>
+            </div>
+            <div class="input-section">
+                <h3>Enter Birth Information</h3>
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" id="sajuName" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label>Birth Date</label>
+                    <input type="date" id="sajuDate">
+                </div>
+                <div class="input-group">
+                    <label>Birth Time</label>
+                    <input type="time" id="sajuTime">
+                </div>
+                <div class="input-group">
+                    <label>Gender</label>
+                    <select id="sajuGender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <button class="primary-button" onclick="analyzeSaju()">Analyze Fortune (2 credits)</button>
+            </div>
+            <div id="sajuResult" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h2 style="color: var(--accent-gold); margin-bottom: 0.5rem;" id="sajuTitle"></h2>
+                        <p style="color: var(--text-secondary);" id="sajuHexagram"></p>
+                    </div>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                        <div style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px;">
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 0.5rem;">Total Luck</h4>
+                            <p id="sajuTotal" style="color: var(--text-primary); line-height: 1.6;"></p>
+                        </div>
+                        <div style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px;">
+                            <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">Monthly Luck</h4>
+                            <p id="sajuMonthly" style="color: var(--text-primary); line-height: 1.6;"></p>
+                        </div>
+                    </div>
+                    <div style="background: hsla(45, 100%, 60%, 0.1); padding: 2rem; border-radius: 15px;">
+                        <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">Advice for the Year</h4>
+                        <p id="sajuAdvice" style="color: var(--text-secondary); line-height: 1.8;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dreamScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">🌙</div>
+                <h1>Dream Analysis</h1>
+                <p>Discover the hidden meanings in your dreams</p>
+            </div>
+            <div class="input-section">
+                <h3>Describe Your Dream</h3>
+                <div class="input-group">
+                    <textarea id="dreamInput" placeholder="I dreamed about..." style="min-height: 150px;"></textarea>
+                    <small>Try keywords like: snake, water, fire, flying, falling, death, money, house, cat, dog,
+                        etc.</small>
+                </div>
+                <button class="primary-button" onclick="analyzeDream()">Analyze Dream (1 credit)</button>
+            </div>
+            <div id="dreamResult" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div
+                        style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 5rem; margin-bottom: 1rem;" id="dreamSymbol"></div>
+                        <h2 style="color: var(--accent-gold); margin-bottom: 0.5rem;" id="dreamMeaning"></h2>
+                        <span
+                            style="background: rgba(157, 78, 221, 0.2); color: var(--secondary-pink); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; border: 1px solid var(--secondary-pink);">Psychological
+                            Archetype</span>
+                    </div>
+                    <div style="margin-bottom: 2.5rem;">
+                        <h4
+                            style="color: var(--primary-purple-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>👁️</span> Deep Interpretation</h4>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8;"
+                            id="dreamInterpretation"></p>
+                    </div>
+                    <div
+                        style="background: hsla(270, 70%, 30%, 0.3); padding: 2rem; border-radius: 15px; border-left: 4px solid var(--accent-green);">
+                        <h4
+                            style="color: var(--accent-green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>💡</span> Actionable Advice</h4>
+                        <p id="dreamAdvice" style="color: var(--text-primary); line-height: 1.6; font-weight: 500;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="compatibilityScreen" class="screen">
+        <div class="stars"></div>
+        <div class="container">
+            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <div class="service-header">
+                <div class="service-icon">💕</div>
+                <h1>Compatibility Analysis</h1>
+                <p>Detailed compatibility based on birth information</p>
+            </div>
+            <div class="input-section">
+                <h3>Your Information</h3>
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" id="person1Name" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label>Birth Date</label>
+                    <input type="date" id="person1Date">
+                </div>
+                <div class="input-group">
+                    <label>Birth Time (Optional)</label>
+                    <input type="time" id="person1Time">
+                </div>
+                <div class="input-group">
+                    <label>Gender</label>
+                    <select id="person1Gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-section" style="margin-top: 2rem;">
+                <h3>Their Information</h3>
+                <div class="input-group">
+                    <label>Their Name</label>
+                    <input type="text" id="person2Name" placeholder="Enter their name">
+                </div>
+                <div class="input-group">
+                    <label>Birth Date</label>
+                    <input type="date" id="person2Date">
+                </div>
+                <div class="input-group">
+                    <label>Birth Time (Optional)</label>
+                    <input type="time" id="person2Time">
+                </div>
+                <div class="input-group">
+                    <label>Gender</label>
+                    <select id="person2Gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <button class="primary-button" onclick="checkCompatibility()" style="margin-top: 2rem;">Analyze
+                    Compatibility (2 credits)</button>
+            </div>
+            <div id="compatibilityResult" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div style="text-align: center; font-size: 5rem; margin-bottom: 1rem;">💕</div>
+                    <h2 style="color: var(--accent-gold); text-align: center; margin-bottom: 2rem;">Compatibility Report
+                    </h2>
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <div style="font-size: 4rem; color: var(--secondary-pink); font-weight: bold;" id="compatScore">
+                        </div>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Overall Compatibility</p>
+                    </div>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                        <div
+                            style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
+                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">Love</h4>
+                            <p id="loveScore" style="font-size: 2rem; color: var(--accent-gold);"></p>
+                        </div>
+                        <div
+                            style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
+                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">Communication</h4>
+                            <p id="commScore" style="font-size: 2rem; color: var(--accent-gold);"></p>
+                        </div>
+                        <div
+                            style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
+                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">Trust</h4>
+                            <p id="trustScore" style="font-size: 2rem; color: var(--accent-gold);"></p>
+                        </div>
+                    </div>
+                    <p id="compatDescription"
+                        style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; text-align: center; margin-top: 2rem;">
+                    </p>
+                    <div
+                        style="background: hsla(45, 100%, 60%, 0.1); padding: 2rem; border-radius: 15px; margin-top: 2rem;">
+                        <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">Relationship Advice</h4>
+                        <p id="compatAdvice" style="color: var(--text-secondary); line-height: 1.8;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="namingScreen" class="screen">
