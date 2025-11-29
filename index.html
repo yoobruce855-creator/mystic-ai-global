@@ -73,7 +73,7 @@
                     <p>Detailed relationship analysis</p>
                 </div>
                 <div class="service-card" onclick="showScreen('namingScreen')">
-                    <div class="card-icon">✍️</div>
+                    <div class="card-icon">👶</div>
                     <h2>Baby Names</h2>
                     <p>Numerology & astrology based</p>
                 </div>
@@ -148,32 +148,32 @@
     <div id="todayScreen" class="screen">
         <div class="stars"></div>
         <div class="container">
-            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <button class="back-btn" onclick="showScreen('mainScreen')">← 뒤로</button>
             <div class="service-header">
                 <div class="service-icon">📅</div>
-                <h1>Daily Horoscope</h1>
-                <p>Personalized fortune based on your birth date</p>
+                <h1>오늘의 운세</h1>
+                <p>생년월일 기반 개인 맞춤 운세</p>
             </div>
 
             <div class="input-section">
-                <h3>Your Information</h3>
+                <h3>정보 입력</h3>
                 <div class="input-group">
-                    <label>Name</label>
-                    <input type="text" id="todayName" placeholder="Enter your name">
+                    <label>이름</label>
+                    <input type="text" id="todayName" placeholder="이름을 입력하세요">
                 </div>
                 <div class="input-group">
-                    <label>Birth Date *</label>
+                    <label>생년월일 *</label>
                     <input type="date" id="todayBirthDate" required>
                 </div>
                 <div class="input-group">
-                    <label>Gender (Optional)</label>
+                    <label>성별 (선택)</label>
                     <select id="todayGender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                        <option value="other">기타</option>
                     </select>
                 </div>
-                <button class="primary-button" onclick="getDailyFortune()">Get Today's Fortune (Free)</button>
+                <button class="primary-button" onclick="getDailyFortune()">오늘의 운세 보기 (무료)</button>
             </div>
 
             <div id="todayResult" class="hidden" style="margin-top: 3rem;">
@@ -273,34 +273,34 @@
     <div id="sajuScreen" class="screen">
         <div class="stars"></div>
         <div class="container">
-            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <button class="back-btn" onclick="showScreen('mainScreen')">← 뒤로</button>
             <div class="service-header">
                 <div class="service-icon">🎴</div>
-                <h1>Astrology Reading</h1>
-                <p>Birth date and time based fortune analysis</p>
+                <h1>사주팔자</h1>
+                <p>생년월일 시 기반 전통 한국 운세</p>
             </div>
             <div class="input-section">
-                <h3>Birth Information</h3>
+                <h3>생년월일 시 입력</h3>
                 <div class="input-group">
-                    <label>Name</label>
-                    <input type="text" id="sajuName" placeholder="Enter your name">
+                    <label>이름</label>
+                    <input type="text" id="sajuName" placeholder="이름을 입력하세요">
                 </div>
                 <div class="input-group">
-                    <label>Birth Date</label>
+                    <label>생년월일</label>
                     <input type="date" id="sajuDate">
                 </div>
                 <div class="input-group">
-                    <label>Birth Time</label>
+                    <label>태어난 시간</label>
                     <input type="time" id="sajuTime">
                 </div>
                 <div class="input-group">
-                    <label>Gender</label>
+                    <label>성별</label>
                     <select id="sajuGender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
                     </select>
                 </div>
-                <button class="primary-button" onclick="analyzeSaju()">Analyze Fortune (2 Credits)</button>
+                <button class="primary-button" onclick="analyzeSaju()">운세 분석 (2 크레딧)</button>
             </div>
             <div id="sajuResult" class="hidden" style="margin-top: 3rem;">
                 <div
@@ -332,35 +332,50 @@
     <div id="dreamScreen" class="screen">
         <div class="stars"></div>
         <div class="container">
-            <button class="back-btn" onclick="showScreen('mainScreen')">← Back</button>
+            <button class="back-btn" onclick="showScreen('mainScreen')">← 뒤로</button>
             <div class="service-header">
-                style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem;
-                margin-bottom: 2rem;">
-                <div style="font-size: 5rem; margin-bottom: 1rem;" id="dreamSymbol"></div>
-                <h2 style="color: var(--accent-gold); margin-bottom: 0.5rem;" id="dreamMeaning"></h2>
-                <span
-                    style="background: rgba(157, 78, 221, 0.2); color: var(--secondary-pink); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; border: 1px solid var(--secondary-pink);">심리적
-                    원형</span>
+                <div class="service-icon">🌙</div>
+                <h1>꿈 해몽</h1>
+                <p>꿈속에 숨겨진 의미를 발견하세요</p>
             </div>
-            <div style="margin-bottom: 2.5rem;">
-                <h4
-                    style="color: var(--primary-purple-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span>👁️</span> 깊은 해석
-                </h4>
-                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8;" id="dreamInterpretation">
-                </p>
+            <div class="input-section">
+                <h3>꿈 내용 설명</h3>
+                <div class="input-group">
+                    <textarea id="dreamInput" placeholder="저는 이런 꿈을 꾸었어요..." style="min-height: 150px;"></textarea>
+                    <small>키워드 예시: 뱀, 물, 불, 날기, 떨어지기, 죽음, 돈, 집, 고양이, 개 등</small>
+                </div>
+                <button class="primary-button" onclick="analyzeDream()">꿈 해몽하기 (1 크레딧)</button>
             </div>
-            <div
-                style="background: hsla(270, 70%, 30%, 0.3); padding: 2rem; border-radius: 15px; border-left: 4px solid var(--accent-green);">
-                <h4
-                    style="color: var(--accent-green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span>💡</span> 실행 가능한 조언
-                </h4>
-                <p id="dreamAdvice" style="color: var(--text-primary); line-height: 1.6; font-weight: 500;"></p>
+            <div id="dreamResult" class="hidden" style="margin-top: 3rem;">
+                <div
+                    style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
+                    <div
+                        style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 5rem; margin-bottom: 1rem;" id="dreamSymbol"></div>
+                        <h2 style="color: var(--accent-gold); margin-bottom: 0.5rem;" id="dreamMeaning"></h2>
+                        <span
+                            style="background: rgba(157, 78, 221, 0.2); color: var(--secondary-pink); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; border: 1px solid var(--secondary-pink);">심리적
+                            원형</span>
+                    </div>
+                    <div style="margin-bottom: 2.5rem;">
+                        <h4
+                            style="color: var(--primary-purple-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>👁️</span> 깊은 해석
+                        </h4>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8;"
+                            id="dreamInterpretation"></p>
+                    </div>
+                    <div
+                        style="background: hsla(270, 70%, 30%, 0.3); padding: 2rem; border-radius: 15px; border-left: 4px solid var(--accent-green);">
+                        <h4
+                            style="color: var(--accent-green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>💡</span> 실행 가능한 조언
+                        </h4>
+                        <p id="dreamAdvice" style="color: var(--text-primary); line-height: 1.6; font-weight: 500;"></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 
     <div id="compatibilityScreen" class="screen">
@@ -681,9 +696,10 @@
         <div class="loading-text" id="loadingText">Consulting the Stars...</div>
     </div>
 
-    <script src="naming_data.js?v=21"></script>
+    <script src="western_names.js"></script>
     <script src="dream_data.js"></script>
-    <script src="professional.js?v=21"></script>
+    <script src="professional.js?v=22"></script>
+    <script src="payment_functions.js"></script>
 </body>
 
 </html>
