@@ -187,59 +187,10 @@
                         <p style="color: var(--text-secondary); font-size: 1.1rem;" id="fortuneDate"></p>
                     </div>
 
-                    <!-- Fortune Message -->
-                    <div style="margin-bottom: 2.5rem;">
-                        <h4
-                            style="color: var(--primary-purple-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>🔮</span> 오늘의 운세
-                        </h4>
-                        <p style="color: var(--text-primary); font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem;"
-                            id="fortuneMessage"></p>
-                    </div>
-
-                    <!-- Element Info -->
-                    <div
-                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                        <div
-                            style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
-                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">나의 오행
-                            </p>
-                            <p style="color: var(--accent-gold); font-size: 1.3rem; font-weight: 600;" id="userElement">
-                            </p>
-                        </div>
-                        <div
-                            style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
-                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">오늘의 오행
-                            </p>
-                            <p style="color: var(--accent-gold); font-size: 1.3rem; font-weight: 600;"
-                                id="todayElement">
-                            </p>
-                        </div>
-                        <div
-                            style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
-                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">조화</p>
-                            <p style="color: var(--accent-gold); font-size: 1.3rem; font-weight: 600;" id="harmonyType">
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Lucky Numbers -->
-                    <div
-                        style="background: hsla(45, 100%, 60%, 0.1); padding: 2rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid var(--accent-gold);">
-                        <h4
-                            style="color: var(--accent-gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>🎰</span> 행운의 숫자
-                        </h4>
-                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                            <span id="luckyNumbers"
-                                style="color: var(--text-primary); font-size: 1.5rem; font-weight: 600;"></span>
-                        </div>
-                    </div>
-
                     <!-- Lucky Color & Best Time -->
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
                         <div style="background: hsla(120, 70%, 40%, 0.2); padding: 1.5rem; border-radius: 15px;">
-                            <h4 style="color: var(--accent-green); margin-bottom: 0.8rem;">🎨 행운의 색</h4>
+                            <h4 style="color: var(--accent-green); margin-bottom: 0.8rem;">🎨 Lucky Color</h4>
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div id="luckyColorBox"
                                     style="width: 50px; height: 50px; border-radius: 10px; border: 2px solid white;">
@@ -249,7 +200,7 @@
                             </div>
                         </div>
                         <div style="background: hsla(200, 70%, 50%, 0.2); padding: 1.5rem; border-radius: 15px;">
-                            <h4 style="color: var(--accent-blue); margin-bottom: 0.8rem;">⏰ 최고의 시간</h4>
+                            <h4 style="color: var(--accent-blue); margin-bottom: 0.8rem;">⏰ Best Time</h4>
                             <p id="bestTime" style="color: var(--text-primary); font-size: 1.3rem; font-weight: 600;">
                             </p>
                         </div>
@@ -260,7 +211,7 @@
                         style="background: hsla(270, 70%, 30%, 0.3); padding: 2rem; border-radius: 15px; border-left: 4px solid var(--accent-green);">
                         <h4
                             style="color: var(--accent-green); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>💡</span> 오늘의 조언
+                            <span>💡</span> Today's Advice
                         </h4>
                         <p id="todayAdvice" style="color: var(--text-primary); line-height: 1.8; font-size: 1.1rem;">
                         </p>
@@ -312,16 +263,16 @@
                     <div
                         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                         <div style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px;">
-                            <h4 style="color: var(--secondary-pink); margin-bottom: 0.5rem;">종합 운</h4>
+                            <h4 style="color: var(--secondary-pink); margin-bottom: 0.5rem;">Overall Fortune</h4>
                             <p id="sajuTotal" style="color: var(--text-primary); line-height: 1.6;"></p>
                         </div>
                         <div style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px;">
-                            <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">월별 운</h4>
+                            <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">Monthly Fortune</h4>
                             <p id="sajuMonthly" style="color: var(--text-primary); line-height: 1.6;"></p>
                         </div>
                     </div>
                     <div style="background: hsla(45, 100%, 60%, 0.1); padding: 2rem; border-radius: 15px;">
-                        <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">올해의 조언</h4>
+                        <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">This Year's Advice</h4>
                         <p id="sajuAdvice" style="color: var(--text-secondary); line-height: 1.8;"></p>
                     </div>
                 </div>
@@ -413,28 +364,29 @@
                 <div
                     style="background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 2px solid var(--border-glow);">
                     <div style="text-align: center; font-size: 5rem; margin-bottom: 1rem;">💕</div>
-                    <h2 style="color: var(--accent-gold); text-align: center; margin-bottom: 2rem;">궁합 분석 결과
+                    <h2 style="color: var(--accent-gold); text-align: center; margin-bottom: 2rem;">Compatibility
+                        Analysis
                     </h2>
                     <div style="text-align: center; margin: 2rem 0;">
                         <div style="font-size: 4rem; color: var(--secondary-pink); font-weight: bold;" id="compatScore">
                         </div>
-                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">종합 궁합도</p>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Overall Compatibility</p>
                     </div>
                     <div
                         style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
                         <div
                             style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
-                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">애정</h4>
+                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">Love</h4>
                             <p id="loveScore" style="font-size: 2rem; color: var(--accent-gold);"></p>
                         </div>
                         <div
                             style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
-                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">소통</h4>
+                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">Communication</h4>
                             <p id="commScore" style="font-size: 2rem; color: var(--accent-gold);"></p>
                         </div>
                         <div
                             style="background: hsla(270, 70%, 30%, 0.3); padding: 1.5rem; border-radius: 15px; text-align: center;">
-                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">신뢰</h4>
+                            <h4 style="color: var(--primary-purple-light); margin-bottom: 0.5rem;">Trust</h4>
                             <p id="trustScore" style="font-size: 2rem; color: var(--accent-gold);"></p>
                         </div>
                     </div>
@@ -443,7 +395,7 @@
                     </p>
                     <div
                         style="background: hsla(45, 100%, 60%, 0.1); padding: 2rem; border-radius: 15px; margin-top: 2rem;">
-                        <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">관계 조언</h4>
+                        <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">Relationship Advice</h4>
                         <p id="compatAdvice" style="color: var(--text-secondary); line-height: 1.8;"></p>
                     </div>
                 </div>
