@@ -28,11 +28,11 @@ const tarotCards = [
 
 // 2. FORTUNE MESSAGES
 const fortuneMessages = [
-    { emoji: '⭐', title: '최고의 날', message: '특별한 기회가 기다립니다. 우주가 당신 편입니다.', advice: '과감하게 행동하세요. 자신감이 성공을 끌어당깁니다.' },
-    { emoji: '🌟', title: '풍성한 축복', message: '즐거운 놀라움과 긍정적인 에너지가 가득한 하루입니다.', advice: '감사를 표현하고 행운을 나누세요.' },
-    { emoji: '💫', title: '꾸준한 진전', message: '일관된 노력이 오늘 의미 있는 진전으로 이어집니다.', advice: '목표에 집중하세요. 작은 성취를 축하하세요.' },
-    { emoji: '🌈', title: '창의적 영감', message: '오늘 창의력이 최고조에 달합니다. 혁신적인 아이디어가 자유롭게 흐릅니다.', advice: '창의적으로 표현하세요. 새로운 것을 시도하세요.' },
-    { emoji: '✨', title: '마법 같은 우연', message: '신호에 주의를 기울이세요. 우주가 당신과 소통합니다.', advice: '직관을 믿으세요. 패턴과 신호를 알아차리세요.' }
+    { emoji: '⭐', title: 'Best Day Ever', message: 'Special opportunities await. The universe is on your side.', advice: 'Act boldly. Confidence attracts success.' },
+    { emoji: '🌟', title: 'Abundant Blessings', message: 'A day filled with pleasant surprises and positive energy.', advice: 'Express gratitude and share your good fortune.' },
+    { emoji: '💫', title: 'Steady Progress', message: 'Consistent effort leads to meaningful progress today.', advice: 'Stay focused on your goals. Celebrate small wins.' },
+    { emoji: '🌈', title: 'Creative Inspiration', message: 'Your creativity peaks today. Innovative ideas flow freely.', advice: 'Express yourself creatively. Try something new.' },
+    { emoji: '✨', title: 'Magical Coincidences', message: 'Pay attention to signs. The universe is communicating with you.', advice: 'Trust your intuition. Notice patterns and signals.' }
 ];
 
 // 3. SAJU DATA
@@ -202,7 +202,7 @@ function analyzeSaju() {
     const date = document.getElementById('sajuDate').value;
 
     if (!name || !date) {
-        alert('이름과 생년월일을 입력해주세요!');
+        alert('Please enter your name and birth date!');
         return;
     }
 
@@ -279,7 +279,7 @@ function checkCompatibility() {
     const gender2 = document.getElementById('person2Gender').value;
 
     if (!name1 || !date1 || !name2 || !date2) {
-        alert('모든 필수 항목을 입력해주세요!');
+        alert('Please fill in all required fields!');
         return;
     }
     if (userCredits < 2) {
@@ -390,11 +390,11 @@ function getDailyFortune() {
     const name = document.getElementById('todayName').value;
 
     if (!birthDate) {
-        alert('생년월일을 입력해주세요.');
+        alert('Please enter your birth date.');
         return;
     }
 
-    showLoading('운세를 계산하는 중...');
+    showLoading('Calculating your fortune...');
 
     setTimeout(() => {
         const today = new Date();
@@ -545,17 +545,17 @@ function generateNamePreview() {
 
     // 입력 검증
     if (!surname || !gender || !year || !month || !day) {
-        alert('모든 필수 항목을 입력해주세요!');
+        alert('Please fill in all required fields!');
         return;
     }
 
     if (typeof NamingEngine === 'undefined') {
-        alert('작명 엔진이 로드되지 않았습니다. 페이지를 새로고침해주세요.');
+        alert('Naming engine not loaded. Please refresh the page.');
         console.error('NamingEngine is undefined');
         return;
     }
 
-    showLoading('사주를 분석하고 최고의 이름을 찾는 중...');
+    showLoading('Analyzing birth chart and finding the best names...');
 
     setTimeout(() => {
         try {
@@ -613,11 +613,11 @@ function generateNamePreview() {
 // 유료 전체 결과 (5개 이름)
 function generateNameFull() {
     if (userCredits < 3) {
-        alert('크레딧이 부족합니다! 3 크레딧이 필요합니다.');
+        alert('Not enough credits! You need 3 credits.');
         return;
     }
 
-    showLoading('전체 이름 분석 중...');
+    showLoading('Analyzing all names...');
 
     setTimeout(() => {
         try {
