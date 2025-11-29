@@ -13,24 +13,36 @@
 - [x] Created README.md for global version
 - [x] Git repository initialized and first commit made
 
+## ✅ Completed (Session 2)
+- [x] Translated main navigation to English (Credits, Premium button)
+- [x] Translated all service cards to English
+- [x] Translated tarot screen completely (Past, Present, Future)
+- [x] Translated horoscope input form to English
+- [x] Translated astrology input form to English
+- [x] Translated dream interpretation input form to English
+- [x] Translated compatibility input form to English
+- [x] Updated payment modal with USD pricing ($1.99, $4.99, $9.99)
+- [x] Updated script tags (western_names.js added)
+- [x] Loading text changed to English
+
 ## 🔄 In Progress / Remaining Work
 
 ### High Priority
-- [ ] Complete translation of all result screens (currently mixed Korean/English)
-- [ ] Translate compatibility screen completely
+- [ ] Translate ALL result screens (currently still Korean)
+  - [ ] Horoscope results (오늘의 운세, 행운의 숫자, etc.)
+  - [ ] Astrology results (종합 운, 월별 운, etc.)
+  - [ ] Dream results (깊은 해석, 실행 가능한 조언, etc.)
+  - [ ] Compatibility results (궁합 분석 결과, 애정/소통/신뢰, etc.)
 - [ ] Replace Korean naming system with Western baby name generator
-- [ ] Update professional.js for English tarot card descriptions
-- [ ] Translate all alert messages and confirmations to English
-- [ ] Update loading text to English
+- [ ] Update payment_functions.js with USD pricing
 - [ ] Test all features end-to-end
 
 ### Medium Priority
 - [ ] Create professional_en.js (English version of professional.js)
 - [ ] Integrate western_names.js with naming screen
 - [ ] Update dream_data.js with English dream interpretations
-- [ ] Translate all button texts and labels
+- [ ] Update all JavaScript alert messages to English
 - [ ] Update meta tags for SEO (English keywords)
-- [ ] Create English version of PAYMENT_SETUP_GUIDE.md
 
 ### Low Priority
 - [ ] Remove Korean backup files
@@ -44,25 +56,25 @@
 ### Current State
 - Main navigation: ✅ English
 - Tarot screen: ✅ English (input), ⚠️ Results may show Korean
-- Horoscope screen: ✅ English (input), ⚠️ Results in Korean
-- Astrology screen: ✅ English (input), ⚠️ Results in Korean
-- Dream screen: ✅ English (input), ⚠️ Results in Korean
-- Compatibility screen: ⚠️ Partially Korean
+- Horoscope screen: ✅ English (input), ❌ Results in Korean
+- Astrology screen: ✅ English (input), ❌ Results in Korean
+- Dream screen: ✅ English (input), ❌ Results in Korean
+- Compatibility screen: ✅ English (input), ❌ Results in Korean
 - Naming screen: ❌ Still Korean (needs complete replacement)
 - Payment modal: ✅ English with USD
 
 ### Technical Debt
 - Many backup files copied from Korean version
-- Mixed Korean/English in result displays
+- Result displays still in Korean
 - Need to create separate English data files
 - professional.js needs English version
 
 ### Next Session Priority
-1. Create professional_en.js with English tarot descriptions
-2. Complete naming screen with Western baby names
-3. Translate all remaining Korean text in results
-4. Test complete user flow
-5. Deploy to separate URL
+1. Translate ALL result screens to English
+2. Create professional_en.js with English tarot descriptions
+3. Complete naming screen with Western baby names
+4. Update payment_functions.js for USD
+5. Test complete user flow
 
 ## 🚀 Deployment Checklist
 - [ ] All text translated to English
@@ -74,5 +86,6 @@
 - [ ] Test on production URL
 
 ---
-Last Updated: 2025-11-28
-Session: 1 of estimated 2-3 sessions needed
+Last Updated: 2025-11-30
+Session: 2 of estimated 2-3 sessions needed
+Progress: ~60% complete
