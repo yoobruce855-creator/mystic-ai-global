@@ -405,59 +405,59 @@ function getDailyFortune() {
         const fortuneIndex = seed % fortuneMessages.length;
         const fortune = fortuneMessages[fortuneIndex];
 
-        // 행운의 숫자 생성
+        // Lucky numbers
         const luckyNums = [];
         for (let i = 0; i < 6; i++) {
             luckyNums.push(((seed * (i + 1) * 7) % 45) + 1);
         }
 
-        // 오행 계산
-        const elements = ['목(木)', '화(火)', '토(土)', '금(金)', '수(水)'];
-        const elementTraits = ['성장, 창조', '열정, 명예', '안정, 신뢰', '결단력, 정의', '지혜, 유연성'];
+        // Five Elements
+        const elements = ['Wood', 'Fire', 'Earth', 'Metal', 'Water'];
+        const elementTraits = ['Growth & Creation', 'Passion & Honor', 'Stability & Trust', 'Determination & Justice', 'Wisdom & Flexibility'];
         const userElementIndex = birthSeed % 5;
         const todayElementIndex = seed % 5;
 
-        // 조화 계산
-        const harmonyTypes = ['상생(相生)', '상극(相剋)', '비화(比和)'];
-        let harmonyIndex = 2; // 기본값: 비화
+        // Harmony calculation
+        const harmonyTypes = ['Generating', 'Overcoming', 'Similar'];
+        let harmonyIndex = 2; // Default: Similar
         if ((userElementIndex + 1) % 5 === todayElementIndex) {
-            harmonyIndex = 0; // 상생
+            harmonyIndex = 0; // Generating
         } else if ((userElementIndex + 2) % 5 === todayElementIndex) {
-            harmonyIndex = 1; // 상극
+            harmonyIndex = 1; // Overcoming
         }
 
-        // 행운의 색
+        // Lucky colors
         const colors = [
-            { name: '초록색', hex: '#2ecc71' },
-            { name: '빨간색', hex: '#e74c3c' },
-            { name: '노란색', hex: '#f39c12' },
-            { name: '흰색', hex: '#ecf0f1' },
-            { name: '파란색', hex: '#3498db' }
+            { name: 'Green', hex: '#2ecc71' },
+            { name: 'Red', hex: '#e74c3c' },
+            { name: 'Yellow', hex: '#f39c12' },
+            { name: 'White', hex: '#ecf0f1' },
+            { name: 'Blue', hex: '#3498db' }
         ];
         const luckyColor = colors[todayElementIndex];
 
-        // 최고의 시간
-        const times = ['오전 6-8시 (묘시)', '오전 9-11시 (사시)', '정오 12-2시 (오시)', '오후 3-5시 (신시)', '오후 6-8시 (유시)'];
+        // Best times
+        const times = ['6-8 AM', '9-11 AM', '12-2 PM', '3-5 PM', '6-8 PM'];
         const bestTime = times[(seed + birthSeed) % 5];
 
-        // 결과 표시
+        // Display results
         document.getElementById('fortuneEmoji').textContent = fortune.emoji;
-        document.getElementById('fortuneTitle').textContent = name ? `${name}님의 오늘의 운세` : '오늘의 운세';
-        document.getElementById('fortuneDate').textContent = today.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('fortuneTitle').textContent = name ? `${name}'s Daily Fortune` : 'Daily Fortune';
+        document.getElementById('fortuneDate').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('fortuneMessage').textContent = fortune.message;
         document.getElementById('luckyNumbers').textContent = luckyNums.join(', ');
         document.getElementById('todayAdvice').textContent = fortune.advice;
 
-        // 오행 정보
+        // Element information
         document.getElementById('userElement').textContent = `${elements[userElementIndex]} - ${elementTraits[userElementIndex]}`;
         document.getElementById('todayElement').textContent = `${elements[todayElementIndex]} - ${elementTraits[todayElementIndex]}`;
         document.getElementById('harmonyType').textContent = harmonyTypes[harmonyIndex];
 
-        // 행운의 색
+        // Lucky color
         document.getElementById('luckyColorBox').style.backgroundColor = luckyColor.hex;
         document.getElementById('luckyColorName').textContent = luckyColor.name;
 
-        // 최고의 시간
+        // Best time
         document.getElementById('bestTime').textContent = bestTime;
 
         hideLoading();
