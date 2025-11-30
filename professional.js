@@ -355,25 +355,25 @@ function checkCompatibility() {
 
         let description, advice;
         if (overallScore >= 85) {
-            const strengths = ['깊은 감정적 유대', '자연스러운 이해', '공유된 가치관', '상호 보완적인 에너지'];
+            const strengths = ['deep emotional bond', 'natural understanding', 'shared values', 'complementary energies'];
             const strength = strengths[combinedHash % strengths.length];
-            description = `${name1}님과 ${name2}님은 뛰어난 ${strength}를 공유합니다! ${overallScore}%의 궁합도는 탁월한 잠재력을 나타냅니다. 별들이 이 관계를 아름답게 정렬시킵니다.`;
-            advice = '이 귀한 인연을 소중히 가꾸세요. 열린 소통과 상호 지지를 통해 강한 기반을 계속 쌓아가세요.';
+            description = `${name1} and ${name2} share an exceptional ${strength}! A ${overallScore}% compatibility indicates outstanding potential. The stars beautifully align for this relationship.`;
+            advice = 'Cherish this precious connection. Continue building a strong foundation through open communication and mutual support.';
         } else if (overallScore >= 70) {
-            const aspects = ['소통 방식', '인생 목표', '감정적 파장', '핵심 가치관'];
+            const aspects = ['communication style', 'life goals', 'emotional wavelength', 'core values'];
             const aspect = aspects[combinedHash % aspects.length];
-            description = `${name1}님과 ${name2}님은 강한 궁합(${overallScore}%)을 가지고 있으며, 특히 ${aspect}에서 두드러집니다. 일부 어려움이 있을 수 있지만, 탄탄한 기반이 훌륭한 잠재력을 제공합니다.`;
-            advice = '커플로서의 자연스러운 강점에 집중하세요. 차이점은 인내와 이해로 해결하세요.';
+            description = `${name1} and ${name2} have strong compatibility (${overallScore}%), particularly in ${aspect}. While some challenges may arise, the solid foundation provides excellent potential.`;
+            advice = 'Focus on your natural strengths as a couple. Address differences with patience and understanding.';
         } else if (overallScore >= 55) {
-            const areas = ['상호 존중', '공유된 관심사', '감정적 지지', '삶의 균형'];
+            const areas = ['mutual respect', 'shared interests', 'emotional support', 'life balance'];
             const area = areas[combinedHash % areas.length];
-            description = `${name1}님과 ${name2}님은 ${overallScore}%의 적당한 궁합을 보입니다. ${area}와 의식적인 노력을 통해 성공할 수 있습니다.`;
-            advice = '차이를 성장의 기회로 받아들이세요. 소통과 타협이 핵심입니다.';
+            description = `${name1} and ${name2} show moderate compatibility at ${overallScore}%. Success is possible through ${area} and conscious effort.`;
+            advice = 'Embrace differences as opportunities for growth. Communication and compromise are key.';
         } else {
-            const challenges = ['다른 생활 리듬', '대조적인 소통 방식', '다양한 우선순위', '뚜렷한 감정적 욕구'];
+            const challenges = ['different life rhythms', 'contrasting communication styles', 'varied priorities', 'distinct emotional needs'];
             const challenge = challenges[combinedHash % challenges.length];
-            description = `${name1}님과 ${name2}님은 ${overallScore}%의 궁합을 가지고 있으며, ${challenge}를 나타냅니다. 이는 추가적인 이해와 노력이 필요합니다.`;
-            advice = '성공을 위해서는 의식적인 노력과 명확한 소통이 필요합니다. 공유된 경험을 통해 강한 기반을 구축하는 데 집중하세요.';
+            description = `${name1} and ${name2} have ${overallScore}% compatibility, indicating ${challenge}. This requires additional understanding and effort.`;
+            advice = 'Success requires conscious effort and clear communication. Focus on building a strong foundation through shared experiences.';
         }
 
         document.getElementById('compatDescription').textContent = description;
