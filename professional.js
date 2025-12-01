@@ -927,3 +927,39 @@ function getDailyFortune() {
         document.getElementById('todayResult').scrollIntoView({ behavior: 'smooth' });
     }, 2000);
 }
+
+// Dream Interpretation Function
+function analyzeDream() {
+    const dreamText = document.getElementById('dreamText').value;
+
+    if (!dreamText || dreamText.trim().length < 3) {
+        alert('Please describe your dream (at least 3 characters)');
+        return;
+    }
+
+    if (userCredits < 1) {
+        alert('Not enough credits! You need 1 credit.');
+        openPaymentModal();
+        return;
+    }
+
+    showLoading('Analyzing your dream...');
+
+    setTimeout(() => {
+        const result = analyzeDreamWithDatabase(dreamText);
+
+        document.getElementById('dreamSymbol').textContent = result.symbol;
+        document.getElementById('dreamMeaning').textContent = result.meaning;
+        document.getElementById('dreamInterpretation').innerHTML = result.interpretation;
+        document.getElementById('dreamAdvice').textContent = result.advice;
+
+        userCredits -= 1;
+        updateCreditsDisplay();
+
+        hideLoading();
+
+        const resultDiv = document.getElementById('dreamResult');
+        resultDiv.classList.remove('hidden');
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+    }, 2000);
+}
